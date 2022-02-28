@@ -1,6 +1,6 @@
 //
 //  TetraUIConstraintCompatible.swift
-//  DeclarativeUIKit
+//  TetraUIKit
 //
 //  Created by Son Nguyen on 2/27/22.
 //

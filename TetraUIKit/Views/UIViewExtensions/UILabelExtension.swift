@@ -1,6 +1,6 @@
 //
 //  UILabelExtension.swift
-//  DeclarativeUIKit
+//  TetraUIKit
 //
 //  Created by Son Nguyen on 1/11/22.
 //
