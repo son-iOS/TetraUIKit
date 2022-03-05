@@ -9,7 +9,7 @@ Pod::Spec.new do |spec|
   This library allows UIKit view creation with declarative syntax. With this lib, you don't need to deal with storyboard anymore.
                    DESC
 
-  spec.homepage     = "https://github.com/ndson040496/TetraUIKit"
+  spec.homepage     = "https://github.com/son-iOS/TetraUIKit"
 
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   spec.license      = { :type => "MIT", :file => "LICENSE" }
@@ -25,7 +25,7 @@ Pod::Spec.new do |spec|
 
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  spec.source       = { :git => "https://github.com/ndson040496/TetraUIKit.git", :tag => "#{spec.version}" }
+  spec.source       = { :git => "https://github.com/son-iOS/TetraUIKit.git", :tag => "#{spec.version}" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
