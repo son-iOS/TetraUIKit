@@ -106,7 +106,7 @@ public extension TetraUIConstraintCompatible {
     /// You can also supply the [offset] and [relation].
     @discardableResult
     func constraintType(_ type: TetraUIConstraintType,
-                        constraintedTo toType: TetraUIConstraintType,
+                        constrainedTo toType: TetraUIConstraintType,
                         of other: TetraUIConstraintCompatible?,
                         with offset: CGFloat = 0,
                         relation: TetraUIConstraintRelation = .equal) -> Self {

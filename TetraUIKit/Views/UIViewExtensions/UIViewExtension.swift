@@ -323,10 +323,10 @@ public extension UIView {
         self.addSubview(scrollView)
         
         return self
-            .constraintType(.leading, constraintedTo: .leading, of: scrollView.frameLayoutGuide)
-            .constraintType(.trailing, constraintedTo: .trailing, of: scrollView.frameLayoutGuide)
-            .constraintType(.top, constraintedTo: .top, of: scrollView.frameLayoutGuide)
-            .constraintType(.bottom, constraintedTo: .bottom, of: scrollView.frameLayoutGuide)
+            .constraintType(.leading, constrainedTo: .leading, of: scrollView.frameLayoutGuide)
+            .constraintType(.trailing, constrainedTo: .trailing, of: scrollView.frameLayoutGuide)
+            .constraintType(.top, constrainedTo: .top, of: scrollView.frameLayoutGuide)
+            .constraintType(.bottom, constrainedTo: .bottom, of: scrollView.frameLayoutGuide)
     }
     
     /// Insert a subview and align it with this view's safe area.
@@ -355,10 +355,10 @@ public extension UIView {
         self.insertSubview(scrollView, at: index)
         
         return self
-            .constraintType(.leading, constraintedTo: .leading, of: scrollView.frameLayoutGuide)
-            .constraintType(.trailing, constraintedTo: .trailing, of: scrollView.frameLayoutGuide)
-            .constraintType(.top, constraintedTo: .top, of: scrollView.frameLayoutGuide)
-            .constraintType(.bottom, constraintedTo: .bottom, of: scrollView.frameLayoutGuide)
+            .constraintType(.leading, constrainedTo: .leading, of: scrollView.frameLayoutGuide)
+            .constraintType(.trailing, constrainedTo: .trailing, of: scrollView.frameLayoutGuide)
+            .constraintType(.top, constrainedTo: .top, of: scrollView.frameLayoutGuide)
+            .constraintType(.bottom, constrainedTo: .bottom, of: scrollView.frameLayoutGuide)
     }
     
     /// Assign this view to a property.

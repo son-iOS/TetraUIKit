@@ -48,7 +48,7 @@ Note that the views within the builder block will be tagged with their order.
 aView
     .edgesPinnedToEdges(of: itsParent, excluding: [.leading])
     .constraintType(.leading,
-                    constraintedTo: .trailing,
+                    constrainteTo: .trailing,
                     of: itsSibling)
     .dimension(.width, matchedTo: .width, of: itsSibling)
 ```
