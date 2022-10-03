@@ -48,13 +48,13 @@ Note that the views within the builder block will be tagged with their order.
 aView
     .edgesPinnedToEdges(of: itsParent, excluding: [.leading])
     .constraintType(.leading,
-                    constrainteTo: .trailing,
+                    constrainedTo: .trailing,
                     of: itsSibling)
     .dimension(.width, matchedTo: .width, of: itsSibling)
 ```
  
 ### Self-layoutable Views
-`TetraUIKit` introduces the concept of self-layoutable views. When a view conforms to this protocol, it can use this method to add constraints in a builder pattern manner: `func selfLayout(_ layoutProcess: @escaping (UIView, UIView?, [UIView]?) -> Void) -> Self` <br/>
+`TetraUIKit` introduces the concept of self-layoutable views. When a view conforms to this protocol by simply adding this to the class `var selfLayoutProcess: ((UIView, UIView?, [UIView]?) -> Void)?`, it can use this method to add constraints in a builder pattern manner: `func selfLayout(_ layoutProcess: @escaping (UIView, UIView?, [UIView]?) -> Void) -> Self` <br/>
 Within the block of this method, the arguments following their order are the view itself, its parent, and its siblings. You can use these argument to do the layouting. <br/>
 ``` Swift
 UIStackView(axis: .horizontal) {
