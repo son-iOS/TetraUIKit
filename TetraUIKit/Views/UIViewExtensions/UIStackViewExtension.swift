@@ -38,7 +38,6 @@ public extension UIStackView {
   }
 
   /// Set the axis of this stack view using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func axis(
     _ axis: AnyPublisher<NSLayoutConstraint.Axis, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -57,7 +56,6 @@ public extension UIStackView {
   }
 
   /// Set the spacing of this stack view using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func spacing(
     _ spacing: AnyPublisher<CGFloat, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -76,7 +74,6 @@ public extension UIStackView {
   }
 
   /// Set custom spacing of this stack view using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func customSpacing(
     _ spacing: AnyPublisher<CGFloat, Never>,
     after view: UIView,
@@ -103,7 +100,6 @@ public extension UIStackView {
   }
 
   /// Set padding of this stack view using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func insets(
     _ insets: AnyPublisher<UIEdgeInsets, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>

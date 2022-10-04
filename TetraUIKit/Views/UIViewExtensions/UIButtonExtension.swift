@@ -17,7 +17,6 @@ public extension UIButton {
   }
 
   /// Set the title for this button using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func title(
     _ title: AnyPublisher<String?, Never>,
     for state: UIControl.State,
@@ -37,7 +36,6 @@ public extension UIButton {
   }
 
   /// Set the image for this button using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func image(
     _ image: AnyPublisher<UIImage?, Never>,
     for state: UIControl.State,
@@ -57,7 +55,6 @@ public extension UIButton {
   }
 
   /// Set the state for this button using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func isEnabled(
     _ isEnabled: AnyPublisher<Bool, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -76,7 +73,6 @@ public extension UIButton {
   }
 
   /// Set the title color for this button using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func titleColor(
     _ color: AnyPublisher<UIColor?, Never>,
     for state: UIControl.State,
@@ -96,7 +92,6 @@ public extension UIButton {
   }
 
   /// Set the font for this button using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func font(
     _ font: AnyPublisher<UIFont, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -117,7 +112,6 @@ public extension UIButton {
   }
 
   /// Set the action for this button using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func target(
     _ target: Any?,
     action: AnyPublisher<Selector, Never>,

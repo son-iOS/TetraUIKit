@@ -28,7 +28,6 @@ public extension UILabel {
   }
 
   /// Set the text of this label using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func text(
     _ text: AnyPublisher<String?, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -47,7 +46,6 @@ public extension UILabel {
   }
 
   /// Set the attributed text of this label using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func attributedText(
     _ text: AnyPublisher<NSAttributedString?, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -66,7 +64,6 @@ public extension UILabel {
   }
 
   /// Set the text color of this label using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func textColor(
     _ color: AnyPublisher<UIColor?, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -85,7 +82,6 @@ public extension UILabel {
   }
 
   /// Set the font of this label using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func font(
     _ font: AnyPublisher<UIFont, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -104,7 +100,6 @@ public extension UILabel {
   }
 
   /// Set the number of lines of this label using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func numberOfLines(
     _ lineCount: AnyPublisher<Int, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -123,7 +118,6 @@ public extension UILabel {
   }
 
   /// Set the text alignment of this label using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func textAlignment(
     _ alignment: AnyPublisher<NSTextAlignment, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -142,7 +136,6 @@ public extension UILabel {
   }
 
   /// Set the line break mode of this label using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func lineBreakMode(
     _ mode: AnyPublisher<NSLineBreakMode, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -163,7 +156,6 @@ public extension UILabel {
   }
 
   /// Set the line break strategy of this label using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func lineBreakStrategy(
     _ strategy: AnyPublisher<NSParagraphStyle.LineBreakStrategy, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>

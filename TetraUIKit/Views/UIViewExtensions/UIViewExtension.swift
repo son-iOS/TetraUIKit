@@ -112,7 +112,6 @@ public extension UIView {
 
   /// Set the content compression resistance priority using publisher [priority] in [axis] for this view.
   /// Cancellable is stored in [cancellables].
-  @available(iOS 13.0, *)
   @discardableResult func contentCompressionResistancePriority(
     _ priority: AnyPublisher<UILayoutPriority, Never>,
     for axis: NSLayoutConstraint.Axis,
@@ -136,7 +135,6 @@ public extension UIView {
 
   /// Set the content hugging priority using publisher [priority] in [axis] for this view.
   /// Cancellable is stored in [cancellables].
-  @available(iOS 13.0, *)
   @discardableResult func contentHuggingPriority(
     _ priority: AnyPublisher<UILayoutPriority, Never>,
     for axis: NSLayoutConstraint.Axis,
@@ -165,7 +163,6 @@ public extension UIView {
   }
 
   /// Add shadow to the this view using publishers.
-  @available(iOS 13.0, *)
   @discardableResult func shadow(
     color: AnyPublisher<UIColor, Never>,
     offset: AnyPublisher<CGSize, Never>,
@@ -192,7 +189,6 @@ public extension UIView {
   }
 
   /// Set the corner radius for this view using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func cornerRadius(
     _ radius: AnyPublisher<CGFloat, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -211,7 +207,6 @@ public extension UIView {
   }
 
   /// Set the opacity for this view using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func alpha(
     _ alpha: AnyPublisher<CGFloat, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -230,7 +225,6 @@ public extension UIView {
   }
 
   /// Set the visibility for this view using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func isVisible(
     _ isVisible: AnyPublisher<Bool, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -249,7 +243,6 @@ public extension UIView {
   }
 
   /// Set the background color for this view using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func backgroundColor(
     _ color: AnyPublisher<UIColor?, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -268,7 +261,6 @@ public extension UIView {
   }
 
   /// Set the tint color for this view using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func tintColor(
     _ color: AnyPublisher<UIColor, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -287,7 +279,6 @@ public extension UIView {
   }
 
   /// Set the content mode for this view using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func contentMode(
     _ mode: AnyPublisher<ContentMode, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>

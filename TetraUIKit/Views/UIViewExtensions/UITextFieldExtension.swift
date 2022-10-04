@@ -24,7 +24,6 @@ public extension UITextField {
   }
   
   /// Set the border style for this text field using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func borderStyle(
     _ style: AnyPublisher<UITextField.BorderStyle, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -43,7 +42,6 @@ public extension UITextField {
   }
   
   /// Set the state for this text field using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func isEnabled(
     _ isEnabled: AnyPublisher<Bool, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -62,7 +60,6 @@ public extension UITextField {
   }
   
   /// Set the autocorrection type for this text field using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func autocorrectionType(
     _ type: AnyPublisher<UITextAutocorrectionType, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -81,7 +78,6 @@ public extension UITextField {
   }
   
   /// Set the text for this text field using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func text(
     _ text: AnyPublisher<String?, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -100,7 +96,6 @@ public extension UITextField {
   }
   
   /// Set the placeholder for this text field using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func placeholder(
     _ placeholder: AnyPublisher<String?, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -119,7 +114,6 @@ public extension UITextField {
   }
   
   /// Set the attributed text for this text field using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func attributedText(
     _ text: AnyPublisher<NSAttributedString?, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -138,7 +132,6 @@ public extension UITextField {
   }
   
   /// Set the text color for this text field using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func textColor(
     _ color: AnyPublisher<UIColor?, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -157,7 +150,6 @@ public extension UITextField {
   }
   
   /// Set the font for this text field using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func font(
     _ font: AnyPublisher<UIFont, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -176,7 +168,6 @@ public extension UITextField {
   }
   
   /// Set the alignment for this text field using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func textAlignment(
     _ alignment: AnyPublisher<NSTextAlignment, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -196,7 +187,6 @@ public extension UITextField {
   }
   
   /// Set the right view for this text field using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func rightView(
     _ view: AnyPublisher<UIView, Never>,
     mode: UITextField.ViewMode,
@@ -217,7 +207,6 @@ public extension UITextField {
   }
   
   /// Set the left view for this text field using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func leftView(
     _ view: AnyPublisher<UIView, Never>,
     mode: UITextField.ViewMode,
@@ -237,7 +226,6 @@ public extension UITextField {
   }
   
   /// Set the input accessory view for this text field using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func inputAccessoryView(
     _ view: AnyPublisher<UIView, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -256,7 +244,6 @@ public extension UITextField {
   }
   
   /// Set the keyboard type for this text field using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func keyboardType(
     _ type: AnyPublisher<UIKeyboardType, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
@@ -277,7 +264,6 @@ public extension UITextField {
   }
   
   /// Set the action for this text field using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func target(
     _ target: Any?,
     action: AnyPublisher<Selector, Never>,

@@ -16,7 +16,6 @@ public extension UIImageView {
   }
 
   /// Set the image of this image view using publisher.
-  @available(iOS 13.0, *)
   @discardableResult func image(
     _ image: AnyPublisher<UIImage?, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
