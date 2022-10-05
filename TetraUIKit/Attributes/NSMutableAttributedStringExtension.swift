@@ -7,14 +7,14 @@
 
 public extension NSMutableAttributedString {
   /// Find [mark]s in string and apply [attributes] to the text in between those marks
-  @discardableResult func attributed(_ attributes: [NSAttributedString.Key : Any],
-                                     between mark: String) -> NSMutableAttributedString {
-    let indices = string.indices(of: mark)
+  @discardableResult func formatted(
+    withAttributes attributes: [NSAttributedString.Key : Any],
+    betweenMark mark: String
+  ) -> Self {
+    let indices = string.indices(ofOccurence: mark)
 
     // Check if there are pairs of marks
-    guard indices.count >= 2, indices.count % 2 == 0 else {
-      return self
-    }
+    guard indices.count >= 2, indices.count % 2 == 0 else { return self }
 
     let startIndex = string.startIndex
     let lowerBound = string.index(startIndex, offsetBy: indices[0])
@@ -31,7 +31,7 @@ public extension NSMutableAttributedString {
 
     // Run again if there is another pair
     if indices.count >= 4 {
-      return attributed(attributes, between: mark)
+      return formatted(withAttributes: attributes, betweenMark: mark)
     }
     return self
   }

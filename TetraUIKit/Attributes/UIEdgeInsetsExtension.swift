@@ -20,10 +20,12 @@ public extension UIEdgeInsets {
   }
 
   /// Create an insets with different edges.
-  static func only(top: CGFloat = 0,
-                   bottom: CGFloat = 0,
-                   left: CGFloat = 0,
-                   right: CGFloat = 0) -> UIEdgeInsets {
+  static func only(
+    top: CGFloat = 0,
+    bottom: CGFloat = 0,
+    left: CGFloat = 0,
+    right: CGFloat = 0
+  ) -> UIEdgeInsets {
     return UIEdgeInsets(top: top, left: left, bottom: -bottom, right: -right)
   }
 }

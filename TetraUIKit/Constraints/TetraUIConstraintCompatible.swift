@@ -44,9 +44,7 @@ public extension TetraUIConstraintCompatible {
     offset: CGFloat,
     relation: TetraUIConstraintRelation
   ) -> NSLayoutConstraint? {
-    guard let firstAnchor = firstAnchor, let secondAnchor = secondAnchor else {
-      return nil
-    }
+    guard let firstAnchor = firstAnchor, let secondAnchor = secondAnchor else { return nil }
 
     switch relation {
     case .equal:

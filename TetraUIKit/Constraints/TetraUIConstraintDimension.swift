@@ -13,7 +13,7 @@ public enum TetraUIConstraintDimension {
 }
 
 public extension TetraUIConstraintCompatible {
-  private func dimensionAnchor(for dimension: TetraUIConstraintDimension) -> NSLayoutDimension {
+  private func anchor(forDimension dimension: TetraUIConstraintDimension) -> NSLayoutDimension {
     switch dimension {
     case .width:
       return widthAnchor
@@ -33,10 +33,12 @@ public extension TetraUIConstraintCompatible {
   }
 
   /// Add [dimension] constraint using value from the provided [size], applied with [relation]
-  @discardableResult func dimension(_ dimension: TetraUIConstraintDimension,
-                                    setTo size: CGFloat,
-                                    with relation: TetraUIConstraintRelation = .equal) -> Self {
-    let thisDimensionAnchor = dimensionAnchor(for: dimension)
+  @discardableResult func dimension(
+    _ dimension: TetraUIConstraintDimension,
+    setTo size: CGFloat,
+    withRelation relation: TetraUIConstraintRelation = .equal
+  ) -> Self {
+    let thisDimensionAnchor = anchor(forDimension: dimension)
     addConstraints {
       switch relation {
       case .equal:
@@ -53,32 +55,38 @@ public extension TetraUIConstraintCompatible {
 
   /// Add [dimension] constraint in [relation] respectively to [toDimension] of [other].
   /// You can also add [offset] and [multiplier].
-  @discardableResult func dimension(_ dimension: TetraUIConstraintDimension,
-                                    matchedTo toDimension: TetraUIConstraintDimension,
-                                    of other: TetraUIConstraintCompatible?,
-                                    with multiplier: CGFloat = 1,
-                                    offset: CGFloat = 0,
-                                    relation: TetraUIConstraintRelation = .equal) -> Self {
-    guard let other = other else {
-      return self
-    }
+  @discardableResult func dimension(
+    _ dimension: TetraUIConstraintDimension,
+    matchedToOtherDimension otherDimension: TetraUIConstraintDimension,
+    of other: TetraUIConstraintCompatible?,
+    withMultiplier multiplier: CGFloat = 1,
+    offset: CGFloat = 0,
+    relation: TetraUIConstraintRelation = .equal
+  ) -> Self {
+    guard let other = other else { return self }
 
-    let thisDimensionAnchor = dimensionAnchor(for: dimension)
-    let otherDimensionAnchor = other.dimensionAnchor(for: toDimension)
+    let thisDimensionAnchor = anchor(forDimension: dimension)
+    let otherDimensionAnchor = other.anchor(forDimension: otherDimension)
     addConstraints {
       switch relation {
       case .equal:
-        thisDimensionAnchor.constraint(equalTo: otherDimensionAnchor,
-                                       multiplier: multiplier,
-                                       constant: offset)
+        thisDimensionAnchor.constraint(
+          equalTo: otherDimensionAnchor,
+          multiplier: multiplier,
+          constant: offset
+        )
       case .greaterThanOrEqual:
-        thisDimensionAnchor.constraint(greaterThanOrEqualTo: otherDimensionAnchor,
-                                       multiplier: multiplier,
-                                       constant: offset)
+        thisDimensionAnchor.constraint(
+          greaterThanOrEqualTo: otherDimensionAnchor,
+          multiplier: multiplier,
+          constant: offset
+        )
       case .lessThanOrEqual:
-        thisDimensionAnchor.constraint(lessThanOrEqualTo: otherDimensionAnchor,
-                                       multiplier: multiplier,
-                                       constant: offset)
+        thisDimensionAnchor.constraint(
+          lessThanOrEqualTo: otherDimensionAnchor,
+          multiplier: multiplier,
+          constant: offset
+        )
       }
     }
 

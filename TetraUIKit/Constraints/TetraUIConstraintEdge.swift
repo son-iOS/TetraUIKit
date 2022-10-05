@@ -23,7 +23,7 @@ public enum TetraUIConstraintEdge: CaseIterable {
 }
 
 public extension TetraUIConstraintCompatible {
-  private func xAnchor(for edge: TetraUIConstraintEdge) -> NSLayoutXAxisAnchor? {
+  private func xAnchor(forEdge edge: TetraUIConstraintEdge) -> NSLayoutXAxisAnchor? {
     switch edge {
     case .leading:
       return leadingAnchor
@@ -34,7 +34,7 @@ public extension TetraUIConstraintCompatible {
     }
   }
 
-  private func yAnchor(for edge: TetraUIConstraintEdge) -> NSLayoutYAxisAnchor? {
+  private func yAnchor(forEdge edge: TetraUIConstraintEdge) -> NSLayoutYAxisAnchor? {
     switch edge {
     case .top:
       return topAnchor
@@ -48,38 +48,46 @@ public extension TetraUIConstraintCompatible {
   /// Add constraints to all edges of this view or layout guide to [other], excluding [edges].
   /// You can also add [insets] and [relation] to the constraints.
   /// If [userSafeArea] is true, the safe area layout guide of a view will be used.
-  @discardableResult func edgesPinnedToEdges(of other: TetraUIConstraintCompatible?,
-                                             excluding edges: Set<TetraUIConstraintEdge>? = nil,
-                                             with insets: UIEdgeInsets = .zero,
-                                             relation: TetraUIConstraintRelation = .equal,
-                                             useSafeArea: Bool = false) -> Self {
-    guard let other = useSafeArea ? other?.safeAreaLayoutGuide : other else {
-      return self
-    }
+  @discardableResult func edgesPinnedToEdges(
+    of other: TetraUIConstraintCompatible?,
+    excludingEdeges edges: Set<TetraUIConstraintEdge>? = nil,
+    withInset insets: UIEdgeInsets = .zero,
+    relation: TetraUIConstraintRelation = .equal,
+    useSafeArea: Bool = false
+  ) -> Self {
+    guard let other = useSafeArea ? other?.safeAreaLayoutGuide : other else { return self }
 
     let edges = TetraUIConstraintEdge.allCases.filter({ !(edges?.contains($0) ?? false) })
     let constraints = edges.map { edge -> NSLayoutConstraint? in
       switch edge {
       case .leading:
-        return Self.makeConstraint(firstAnchor: leadingAnchor,
-                                   secondAnchor: other.leadingAnchor,
-                                   offset: insets.left,
-                                   relation: relation)
+        return Self.makeConstraint(
+          firstAnchor: leadingAnchor,
+          secondAnchor: other.leadingAnchor,
+          offset: insets.left,
+          relation: relation
+        )
       case .trailing:
-        return Self.makeConstraint(firstAnchor: trailingAnchor,
-                                   secondAnchor: other.trailingAnchor,
-                                   offset: insets.right,
-                                   relation: relation)
+        return Self.makeConstraint(
+          firstAnchor: trailingAnchor,
+          secondAnchor: other.trailingAnchor,
+          offset: insets.right,
+          relation: relation
+        )
       case .top:
-        return Self.makeConstraint(firstAnchor: topAnchor,
-                                   secondAnchor: other.topAnchor,
-                                   offset: insets.top,
-                                   relation: relation)
+        return Self.makeConstraint(
+          firstAnchor: topAnchor,
+          secondAnchor: other.topAnchor,
+          offset: insets.top,
+          relation: relation
+        )
       case .bottom:
-        return Self.makeConstraint(firstAnchor: bottomAnchor,
-                                   secondAnchor: other.bottomAnchor,
-                                   offset: insets.bottom,
-                                   relation: relation)
+        return Self.makeConstraint(
+          firstAnchor: bottomAnchor,
+          secondAnchor: other.bottomAnchor,
+          offset: insets.bottom,
+          relation: relation
+        )
       }
     }
     addConstraints {
@@ -94,12 +102,14 @@ public extension TetraUIConstraintCompatible {
   /// [edge] and [otherEdge] have to be compatible to each other.
   /// If [userSafeArea] is true, the safe area layout guide of a view will be used.
   @discardableResult
-  func edge(_ edge: TetraUIConstraintEdge,
-            pinnedTo otherEdge: TetraUIConstraintEdge,
-            of other: TetraUIConstraintCompatible?,
-            with offset: CGFloat = 0,
-            relation: TetraUIConstraintRelation = .equal,
-            useSafeArea: Bool = false) -> Self {
+  func edge(
+    _ edge: TetraUIConstraintEdge,
+    pinnedToOtherEdge otherEdge: TetraUIConstraintEdge,
+    of other: TetraUIConstraintCompatible?,
+    withOffset offset: CGFloat = 0,
+    relation: TetraUIConstraintRelation = .equal,
+    useSafeArea: Bool = false
+  ) -> Self {
     guard edge.isCompatible(with: otherEdge),
           let other = useSafeArea ? other?.safeAreaLayoutGuide : other else {
       return self
@@ -108,15 +118,19 @@ public extension TetraUIConstraintCompatible {
     addConstraints {
       switch edge {
       case .leading, .trailing:
-        Self.makeConstraint(firstAnchor: xAnchor(for: edge),
-                            secondAnchor: other.xAnchor(for: otherEdge),
-                            offset: offset,
-                            relation: relation)
+        Self.makeConstraint(
+          firstAnchor: xAnchor(forEdge: edge),
+          secondAnchor: other.xAnchor(forEdge: otherEdge),
+          offset: offset,
+          relation: relation
+        )
       case .top, .bottom:
-        Self.makeConstraint(firstAnchor: yAnchor(for: edge),
-                            secondAnchor: other.yAnchor(for: otherEdge),
-                            offset: offset,
-                            relation: relation)
+        Self.makeConstraint(
+          firstAnchor: yAnchor(forEdge: edge),
+          secondAnchor: other.yAnchor(forEdge: otherEdge),
+          offset: offset,
+          relation: relation
+        )
       }
     }
 

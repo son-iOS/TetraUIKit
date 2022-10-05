@@ -23,7 +23,9 @@ public struct TetraUIConstraintBuilder {
     }
   }
 
-  public static func buildExpression(_ components: [NSLayoutConstraint]...) -> [NSLayoutConstraint] {
+  public static func buildExpression(
+    _ components: [NSLayoutConstraint]...
+  ) -> [NSLayoutConstraint] {
     components.flatMap { $0 }
   }
 

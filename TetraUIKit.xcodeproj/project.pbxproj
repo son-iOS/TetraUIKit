@@ -8,6 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		02316C6F28EB59DE004C9FDD /* UIScrollViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02316C6E28EB59DE004C9FDD /* UIScrollViewExtension.swift */; };
+		0265939A28EC9B8A0007C180 /* TetraUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0265939928EC9B8A0007C180 /* TetraUIView.swift */; };
+		0265939C28EC9C320007C180 /* TetraUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0265939B28EC9C320007C180 /* TetraUIButton.swift */; };
+		0265939E28ECAA660007C180 /* TetraUIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0265939D28ECAA660007C180 /* TetraUIImageView.swift */; };
+		026593A028ECAD4A0007C180 /* TetraUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0265939F28ECAD4A0007C180 /* TetraUILabel.swift */; };
+		029A8D7228EDAB4A00060A14 /* TetraUIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029A8D7128EDAB4A00060A14 /* TetraUIScrollView.swift */; };
+		029A8D7428EDAD6100060A14 /* TetraUIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029A8D7328EDAD6100060A14 /* TetraUIStackView.swift */; };
+		029A8D7628EDDF8700060A14 /* TetraUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029A8D7528EDDF8700060A14 /* TetraUITextField.swift */; };
+		029A8D7828EDE07B00060A14 /* TetraUITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029A8D7728EDE07B00060A14 /* TetraUITextView.swift */; };
+		029A8D7C28EDE15700060A14 /* TetraUITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029A8D7B28EDE15700060A14 /* TetraUITableView.swift */; };
+		029A8D7E28EDE19100060A14 /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029A8D7D28EDE19100060A14 /* UITableViewExtension.swift */; };
+		029A8D8128EDE37500060A14 /* TetraUICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029A8D8028EDE37500060A14 /* TetraUICollectionView.swift */; };
 		6B90F86527CBCA10001DC580 /* TetraUIKit.docc in Sources */ = {isa = PBXBuildFile; fileRef = 6B90F86427CBCA10001DC580 /* TetraUIKit.docc */; };
 		6B90F86B27CBCA10001DC580 /* TetraUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B90F86027CBCA10001DC580 /* TetraUIKit.framework */; };
 		6B90F87027CBCA10001DC580 /* TetraUIKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B90F86F27CBCA10001DC580 /* TetraUIKitTests.swift */; };
@@ -16,9 +27,8 @@
 		6B90F89427CBCA36001DC580 /* UIEdgeInsetsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B90F87D27CBCA36001DC580 /* UIEdgeInsetsExtension.swift */; };
 		6B90F89527CBCA36001DC580 /* NSMutableAttributedStringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B90F87E27CBCA36001DC580 /* NSMutableAttributedStringExtension.swift */; };
 		6B90F89627CBCA36001DC580 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B90F87F27CBCA36001DC580 /* StringExtension.swift */; };
-		6B90F89727CBCA36001DC580 /* TetraUISelfLayoutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B90F88227CBCA36001DC580 /* TetraUISelfLayoutable.swift */; };
+		6B90F89727CBCA36001DC580 /* TetraUISelfAdjustable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B90F88227CBCA36001DC580 /* TetraUISelfAdjustable.swift */; };
 		6B90F89827CBCA36001DC580 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B90F88427CBCA36001DC580 /* UIButtonExtension.swift */; };
-		6B90F89927CBCA36001DC580 /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B90F88527CBCA36001DC580 /* UIImageViewExtension.swift */; };
 		6B90F89A27CBCA36001DC580 /* TetraUIConstraintBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B90F88827CBCA36001DC580 /* TetraUIConstraintBuilder.swift */; };
 		6B90F89B27CBCA36001DC580 /* TetraUIConstraintDimension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B90F88927CBCA36001DC580 /* TetraUIConstraintDimension.swift */; };
 		6B90F89C27CBCA36001DC580 /* TetraUIConstraintEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B90F88A27CBCA36001DC580 /* TetraUIConstraintEdge.swift */; };
@@ -44,6 +54,17 @@
 
 /* Begin PBXFileReference section */
 		02316C6E28EB59DE004C9FDD /* UIScrollViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollViewExtension.swift; sourceTree = "<group>"; };
+		0265939928EC9B8A0007C180 /* TetraUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraUIView.swift; sourceTree = "<group>"; };
+		0265939B28EC9C320007C180 /* TetraUIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraUIButton.swift; sourceTree = "<group>"; };
+		0265939D28ECAA660007C180 /* TetraUIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraUIImageView.swift; sourceTree = "<group>"; };
+		0265939F28ECAD4A0007C180 /* TetraUILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraUILabel.swift; sourceTree = "<group>"; };
+		029A8D7128EDAB4A00060A14 /* TetraUIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraUIScrollView.swift; sourceTree = "<group>"; };
+		029A8D7328EDAD6100060A14 /* TetraUIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraUIStackView.swift; sourceTree = "<group>"; };
+		029A8D7528EDDF8700060A14 /* TetraUITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraUITextField.swift; sourceTree = "<group>"; };
+		029A8D7728EDE07B00060A14 /* TetraUITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraUITextView.swift; sourceTree = "<group>"; };
+		029A8D7B28EDE15700060A14 /* TetraUITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraUITableView.swift; sourceTree = "<group>"; };
+		029A8D7D28EDE19100060A14 /* UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
+		029A8D8028EDE37500060A14 /* TetraUICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetraUICollectionView.swift; sourceTree = "<group>"; };
 		6B90F86027CBCA10001DC580 /* TetraUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TetraUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B90F86327CBCA10001DC580 /* TetraUIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TetraUIKit.h; sourceTree = "<group>"; };
 		6B90F86427CBCA10001DC580 /* TetraUIKit.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = TetraUIKit.docc; sourceTree = "<group>"; };
@@ -53,9 +74,8 @@
 		6B90F87D27CBCA36001DC580 /* UIEdgeInsetsExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIEdgeInsetsExtension.swift; sourceTree = "<group>"; };
 		6B90F87E27CBCA36001DC580 /* NSMutableAttributedStringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSMutableAttributedStringExtension.swift; sourceTree = "<group>"; };
 		6B90F87F27CBCA36001DC580 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
-		6B90F88227CBCA36001DC580 /* TetraUISelfLayoutable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TetraUISelfLayoutable.swift; sourceTree = "<group>"; };
+		6B90F88227CBCA36001DC580 /* TetraUISelfAdjustable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TetraUISelfAdjustable.swift; sourceTree = "<group>"; };
 		6B90F88427CBCA36001DC580 /* UIButtonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
-		6B90F88527CBCA36001DC580 /* UIImageViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
 		6B90F88827CBCA36001DC580 /* TetraUIConstraintBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TetraUIConstraintBuilder.swift; sourceTree = "<group>"; };
 		6B90F88927CBCA36001DC580 /* TetraUIConstraintDimension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TetraUIConstraintDimension.swift; sourceTree = "<group>"; };
 		6B90F88A27CBCA36001DC580 /* TetraUIConstraintEdge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TetraUIConstraintEdge.swift; sourceTree = "<group>"; };
@@ -150,6 +170,16 @@
 			children = (
 				6B90F88127CBCA36001DC580 /* SelfLayoutable */,
 				6B90F88327CBCA36001DC580 /* UIViewExtensions */,
+				0265939B28EC9C320007C180 /* TetraUIButton.swift */,
+				029A8D8028EDE37500060A14 /* TetraUICollectionView.swift */,
+				0265939D28ECAA660007C180 /* TetraUIImageView.swift */,
+				0265939F28ECAD4A0007C180 /* TetraUILabel.swift */,
+				029A8D7128EDAB4A00060A14 /* TetraUIScrollView.swift */,
+				029A8D7328EDAD6100060A14 /* TetraUIStackView.swift */,
+				029A8D7B28EDE15700060A14 /* TetraUITableView.swift */,
+				029A8D7528EDDF8700060A14 /* TetraUITextField.swift */,
+				029A8D7728EDE07B00060A14 /* TetraUITextView.swift */,
+				0265939928EC9B8A0007C180 /* TetraUIView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -157,7 +187,7 @@
 		6B90F88127CBCA36001DC580 /* SelfLayoutable */ = {
 			isa = PBXGroup;
 			children = (
-				6B90F88227CBCA36001DC580 /* TetraUISelfLayoutable.swift */,
+				6B90F88227CBCA36001DC580 /* TetraUISelfAdjustable.swift */,
 			);
 			path = SelfLayoutable;
 			sourceTree = "<group>";
@@ -167,12 +197,12 @@
 			children = (
 				6B90F88E27CBCA36001DC580 /* CollectionOfViewsExtension.swift */,
 				6B90F88427CBCA36001DC580 /* UIButtonExtension.swift */,
-				6B90F88527CBCA36001DC580 /* UIImageViewExtension.swift */,
 				6B90F89027CBCA36001DC580 /* UILabelExtension.swift */,
 				02316C6E28EB59DE004C9FDD /* UIScrollViewExtension.swift */,
 				6B90F89227CBCA36001DC580 /* UIStackViewExtension.swift */,
 				6B90F88F27CBCA36001DC580 /* UITextFieldExtension.swift */,
 				6B90F89127CBCA36001DC580 /* UIViewExtension.swift */,
+				029A8D7D28EDE19100060A14 /* UITableViewExtension.swift */,
 			);
 			path = UIViewExtensions;
 			sourceTree = "<group>";
@@ -309,23 +339,33 @@
 			files = (
 				6B90F89E27CBCA36001DC580 /* TetraUIConstraintCompatible.swift in Sources */,
 				6B90F89C27CBCA36001DC580 /* TetraUIConstraintEdge.swift in Sources */,
+				029A8D7228EDAB4A00060A14 /* TetraUIScrollView.swift in Sources */,
 				6B90F8A227CBCA36001DC580 /* UILabelExtension.swift in Sources */,
+				029A8D7628EDDF8700060A14 /* TetraUITextField.swift in Sources */,
 				6B90F8A027CBCA36001DC580 /* CollectionOfViewsExtension.swift in Sources */,
 				6B90F86527CBCA10001DC580 /* TetraUIKit.docc in Sources */,
+				0265939E28ECAA660007C180 /* TetraUIImageView.swift in Sources */,
+				029A8D7828EDE07B00060A14 /* TetraUITextView.swift in Sources */,
 				6B90F89F27CBCA36001DC580 /* TetraUIConstraintRelation.swift in Sources */,
 				6B90F8A327CBCA36001DC580 /* UIViewExtension.swift in Sources */,
 				6B90F8A427CBCA36001DC580 /* UIStackViewExtension.swift in Sources */,
+				029A8D7C28EDE15700060A14 /* TetraUITableView.swift in Sources */,
 				6B90F89427CBCA36001DC580 /* UIEdgeInsetsExtension.swift in Sources */,
 				6B90F89627CBCA36001DC580 /* StringExtension.swift in Sources */,
+				029A8D8128EDE37500060A14 /* TetraUICollectionView.swift in Sources */,
 				6B90F89527CBCA36001DC580 /* NSMutableAttributedStringExtension.swift in Sources */,
+				029A8D7428EDAD6100060A14 /* TetraUIStackView.swift in Sources */,
 				6B90F89B27CBCA36001DC580 /* TetraUIConstraintDimension.swift in Sources */,
+				026593A028ECAD4A0007C180 /* TetraUILabel.swift in Sources */,
 				6B90F8A127CBCA36001DC580 /* UITextFieldExtension.swift in Sources */,
+				029A8D7E28EDE19100060A14 /* UITableViewExtension.swift in Sources */,
 				6B90F89827CBCA36001DC580 /* UIButtonExtension.swift in Sources */,
 				6B90F89D27CBCA36001DC580 /* TetraUIConstraintType.swift in Sources */,
 				02316C6F28EB59DE004C9FDD /* UIScrollViewExtension.swift in Sources */,
-				6B90F89727CBCA36001DC580 /* TetraUISelfLayoutable.swift in Sources */,
-				6B90F89927CBCA36001DC580 /* UIImageViewExtension.swift in Sources */,
+				0265939A28EC9B8A0007C180 /* TetraUIView.swift in Sources */,
+				6B90F89727CBCA36001DC580 /* TetraUISelfAdjustable.swift in Sources */,
 				6B90F89A27CBCA36001DC580 /* TetraUIConstraintBuilder.swift in Sources */,
+				0265939C28EC9C320007C180 /* TetraUIButton.swift in Sources */,
 				6B90F89327CBCA36001DC580 /* TetraUIViewBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,12 +10,12 @@ import UIKit
 public extension String {
 
   /// Calulate and returns a rect that would fit the current string with provided [font].
-  func size(for font: UIFont) -> CGSize {
+  func size(tofitFont font: UIFont) -> CGSize {
     return (self as NSString).size(withAttributes: [.font: font])
   }
 
   /// Find all the indices of a sub-string [occurrence] within this string
-  func indices(of occurrence: String) -> [Int] {
+  func indices(ofOccurence occurrence: String) -> [Int] {
     var indices = [Int]()
     var position = startIndex
 

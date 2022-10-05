@@ -7,20 +7,21 @@ With this library, you can now say goodbye to storyboard as it simplifies the ef
  ### Attribute setter chaining
  View creation in `TetraUIKit` are built using builder pattern. Here is a sample usage of it:
  ``` Swift
- TetraUITextField(placeholder: "Hello") // UITextField yields the same result here
-    .borderStyle(.roundedRect)
-    .keyboardType(.numbersAndPunctuation)
-    .assign(to: &yourProperty) // You assign this view to a property here
-    .target(self, action: #selector(textChanged(sender:)), for: .editingChanged)
-    .rightView(UILabel("World"), mode: .always)
-    .autocorrectionType(.no)
+ TetraUITextField()
+  .property(\.font, setTo: UIFont.boldSystemFont(ofSize: 12))
+  .property(\.rightView, setTo: UIView())
+  .assigned(to: &instanceProperty)  // You assign this view to a property here
+  .target(self, action: #selector(textChanged(sender:)), for: .editingChanged)
  ```
  
  `TetraUIKit` also support `Combine`:
  ``` Swfit
  TetraUILabel()
-    .text(Just<String>("Hello World!").eraseToAnyPublisher(), 
-          cancelledWith: &cancellables)
+  .property(
+    \.text,
+    setBy: Just<String>("Hello World!").eraseToAnyPublisher(),
+    cancelledWith: &cancellables
+  )
  ```
  
 ### Subviews with `UIViewBuilder`
@@ -53,8 +54,8 @@ aView
     .dimension(.width, matchedTo: .width, of: itsSibling)
 ```
  
-### Self-layoutable Views
-`TetraUIKit` introduces the concept of self-layoutable views. When a view conforms to this protocol by simply adding this to the class `var selfLayoutProcess: ((UIView, UIView?, [UIView]?) -> Void)?`, it can use this method to add constraints in a builder pattern manner: `func selfLayout(_ layoutProcess: @escaping (UIView, UIView?, [UIView]?) -> Void) -> Self` <br/>
+### Self-adjustable Views
+`TetraUIKit` introduces the concept of self-adjustable views. When a view conforms to this protocol by simply adding this to the class `var selfAdjustProcess: ((UIView, UIView?, [UIView]?) -> Void)?`, it can use this method to add constraints or other properties in a builder pattern manner: `func selfLayout(_ layoutProcess: @escaping (UIView, UIView?, [UIView]?) -> Void) -> Self` <br/>
 Within the block of this method, the arguments following their order are the view itself, its parent, and its siblings. You can use these argument to do the layouting. <br/>
 ``` Swift
 UIStackView(axis: .horizontal) {
@@ -81,7 +82,7 @@ UIStackView(axis: .horizontal) {
 }
 ```
 `TetraUIKit` already implemented some basic view types to conform this for you. They are views that have the prefix of `TetraUI`, e.g. `TetraUILabel` or `TetraUIButton`.<br/>
-Keep in mind that the self-layouting only works in a view builder block like the example above. If you create the view and add it to other view manually, this will not work. In that case, you simply add constraints using the provided methods normally.
+Keep in mind that the self-ajdusting only works in a view builder block like the example above. If you create the view and add it to other view manually, this will not work. In that case, you simply add constraints using the provided methods normally.
 
 ### Misc
 There are a few more little things that `TetraUIKit` adds to your toolbox, please raise an issue if you have any problem using this library.
