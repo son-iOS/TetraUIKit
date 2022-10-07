@@ -26,8 +26,11 @@ public extension UIStackView {
       }
     }
 
-    for child in children where child is TetraUISelfAdjustable {
-      (child as? TetraUISelfAdjustable)?.selfAdjustProcess?(child, self, children)
+    for child in children {
+      if let selfAdjustChild = child as? TetraUISelfAdjustable {
+        selfAdjustChild.selfAdjustProcess?(child, self, arrangedSubviews)
+        selfAdjustChild.selfAdjustProcess = nil
+      }
     }
   }
 

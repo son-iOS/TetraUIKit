@@ -19,8 +19,8 @@ Pod::Spec.new do |spec|
   spec.author             = { "Son Nguyen" => "ndson040496@gmail.com" }
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  spec.ios.deployment_target = "11.0"
-  spec.osx.deployment_target = "10.15"
+  spec.ios.deployment_target = "13.0"
+  spec.osx.deployment_target = "11"
   spec.swift_versions = "5"
 
 
@@ -29,7 +29,7 @@ Pod::Spec.new do |spec|
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  spec.source_files  = "TetraUIKit", "TetraUIKit/**/*.{swift}"
-  spec.public_header_files = "TetraUIKit/**/TetraUIKit.h"
+  spec.source_files  = "TetraUIKit", "Sources/TetraUIKit/**/*.{swift}"
+  spec.public_header_files = "Sources/TetraUIKit/**/TetraUIKit.h"
 
 end

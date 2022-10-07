@@ -55,8 +55,14 @@ aView
 ```
  
 ### Self-adjustable Views
-`TetraUIKit` introduces the concept of self-adjustable views. When a view conforms to this protocol by simply adding this to the class `var selfAdjustProcess: ((UIView, UIView?, [UIView]?) -> Void)?`, it can use this method to add constraints or other properties in a builder pattern manner: `func selfLayout(_ layoutProcess: @escaping (UIView, UIView?, [UIView]?) -> Void) -> Self` <br/>
-Within the block of this method, the arguments following their order are the view itself, its parent, and its siblings. You can use these argument to do the layouting. <br/>
+`TetraUIKit` introduces the concept of self-adjustable views. When a view conforms to this protocol by simply adding this to the class `var selfAdjustProcess: ((UIView, UIView?, [UIView]?) -> Void)?`, it can use this method to add constraints or other properties in a builder pattern manner: 
+```
+  func selfAdjust(
+    independentlyAdjust: Bool = false,
+    adjustProcess: @escaping (UIView, UIView?, [UIView]?) -> Void
+  ) -> Self
+```
+Within the block of this method, the arguments following their order are the view itself, its parent, and its siblings (including itself). You can use these argument to do the layouting. <br/>
 ``` Swift
 UIStackView(axis: .horizontal) {
     TetraUILabel()

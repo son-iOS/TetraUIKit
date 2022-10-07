@@ -16,14 +16,24 @@ import UIKit
 ///   var selfAdjustProcess: ((UIView, UIView?, [UIView]?) -> Void)?`
 /// ```
 public protocol TetraUISelfAdjustable: AnyObject {
-  /// The self-adjust block. The arguments following the order are the view itself, its parent, and its siblings.
+  /// The self-adjust block. The arguments following the order are the view itself, its parent, and its siblings (including itself).
   var selfAdjustProcess: ((UIView, UIView?, [UIView]?) -> Void)? { get set }
 }
 
 public extension TetraUISelfAdjustable {
-  /// Add a self-adjust block to the current view. The arguments following the order are the view itself, its parent, and its siblings.
-  func selfAdjust(_ layoutProcess: @escaping (UIView, UIView?, [UIView]?) -> Void) -> Self {
-    self.selfAdjustProcess = layoutProcess
+  /// Add a self-adjust block to the current view. The arguments following the order are the view itself, its parent,
+  /// and its siblings (including itself). Set [independentlyAdjust] to true if the context of this view initialization is not as a subview.
+  func selfAdjust(
+    independentlyAdjust: Bool = false,
+    adjustProcess: @escaping (UIView, UIView?, [UIView]?) -> Void
+  ) -> Self {
+    guard !independentlyAdjust else {
+      if let this = self as? UIView {
+        adjustProcess(this, this.superview, this.superview?.subviews)
+      }
+      return self
+    }
+    self.selfAdjustProcess = adjustProcess
     return self
   }
 }

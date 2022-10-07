@@ -5,6 +5,8 @@
 //  Created by Son Nguyen on 1/10/22.
 //
 
+import Foundation
+
 public extension NSMutableAttributedString {
   /// Find [mark]s in string and apply [attributes] to the text in between those marks
   @discardableResult func formatted(

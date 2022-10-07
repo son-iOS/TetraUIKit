@@ -15,6 +15,20 @@ public extension UIScrollView {
     return self
   }
 
+  /// Set zoom scale with publisher
+  @discardableResult func zoomScale(
+    _ scale: AnyPublisher<CGFloat, Never>,
+    animated: Bool,
+    cancelledWith cancellables: inout Set<AnyCancellable>
+  ) -> Self {
+    scale.sink { [weak self] scale in
+      self?.setZoomScale(scale, animated: animated)
+    }.store(in: &cancellables)
+
+    return self
+  }
+
+  /// Set content offset with publisher
   @discardableResult func contentOffset(
     _ offset: AnyPublisher<CGPoint, Never>,
     animated: Bool,

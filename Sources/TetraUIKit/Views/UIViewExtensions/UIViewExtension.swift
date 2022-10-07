@@ -24,7 +24,10 @@ public extension UIView {
     }
 
     for child in children where child is TetraUISelfAdjustable {
-      (child as? TetraUISelfAdjustable)?.selfAdjustProcess?(child, self, subviews)
+      if let selfAdjustChild = child as? TetraUISelfAdjustable {
+        selfAdjustChild.selfAdjustProcess?(child, self, subviews)
+        selfAdjustChild.selfAdjustProcess = nil
+      }
     }
   }
 
