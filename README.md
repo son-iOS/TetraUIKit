@@ -28,14 +28,14 @@ With this library, you can now say goodbye to storyboard as it simplifies the ef
 Similar to `ViewBuilder` of `SwiftUI`, `UIViewBuilder` allows creating list of view using `@resultBuilder` pattern. 
 ``` Swift
 UIStackView(axis: .vertical, spacing: 10) {
-    UILabel("TetraUIKit")
-        .textColor(.systemBlue)
-    UILabel("is")
-    if youLikeIt {
-        UILabel("great")
-    } else {
-        UILabel("improvable")
-    }
+  UILabel("TetraUIKit")
+    .property(\.textColor, setTo: .systemBlue)
+  UILabel("is")
+  if youLikeIt {
+    UILabel("great")
+  } else {
+    UILabel("improvable")
+  }
 }
 .backgroundColor(.gray)
 ```
@@ -46,12 +46,13 @@ Note that the views within the builder block will be tagged with their order.
 `TetraUIKit` provide suite of methods to help creating constraints for your views and layout guides. These methods are written in declarative syntax and can be chained as well.
 
 ``` Swift
-aView
-    .edgesPinnedToEdges(of: itsParent, excluding: [.leading])
-    .constraintType(.leading,
-                    constrainedTo: .trailing,
-                    of: itsSibling)
-    .dimension(.width, matchedTo: .width, of: itsSibling)
+thisView.edgesPinnedToEdges(
+  of: parent,
+  excludingEdeges: [.leading],
+  withInset: .zero,
+  relation: .greaterThanOrEqual,
+  useSafeArea: true
+)
 ```
  
 ### Self-adjustable Views
@@ -64,27 +65,15 @@ aView
 ```
 Within the block of this method, the arguments following their order are the view itself, its parent, and its siblings (including itself). You can use these argument to do the layouting. <br/>
 ``` Swift
-UIStackView(axis: .horizontal) {
-    TetraUILabel()
-        .text(Just<String>("Hello World!").eraseToAnyPublisher(), 
-              cancelledWith: &cancellables)
-        .backgroundColor(.white)
-        .cornerRadius(4)
-        .shadow(color: .black, offset: .zero, radius: 2, opacity: 0.2)
-        .textAlignment(.center)
-    TetraUILabel()
-        .text("Hello again!")
-        .backgroundColor(.white)
-        .cornerRadius(4)
-        .shadow(color: .black, offset: .zero, radius: 2, opacity: 0.2)
-        .selfLayout { thisView, parent, siblings in // Self-layouting happens here
-            guard let previousLabel = siblings?.viewWithTag(0) else {
-                return
-            }
-            
-            thisView.dimension(.width, matchedTo: .width, of: previousLabel)
-        }
-        .textAlignment(.center)
+UIStackView(axis: .vertical) {
+  TetraUILabel()
+  TetraUILabel()
+    .selfAdjust { thisView, parent, siblings in // Self-layouting happens here
+      guard let previousLabel = siblings?.viewWithTag(0) else {
+        return
+      }
+      thisView.dimension(.height, matchedToOtherDimension: .height, of: previousLabel)
+    }
 }
 ```
 `TetraUIKit` already implemented some basic view types to conform this for you. They are views that have the prefix of `TetraUI`, e.g. `TetraUILabel` or `TetraUIButton`.<br/>

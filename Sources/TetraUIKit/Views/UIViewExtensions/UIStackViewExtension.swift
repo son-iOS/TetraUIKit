@@ -11,9 +11,11 @@ import Combine
 public extension UIStackView {
   /// Create a stack view in [axis] directionwith specified [arrangedChildren],  each child is [spacing] apart from each other.
   ///Children will be tagged with the order within the array.
-  convenience init(axis: NSLayoutConstraint.Axis = .vertical,
-                   spacing: CGFloat = 0,
-                   @TetraUIViewBuilder with arrangedChildren: () -> [UIView]) {
+  convenience init(
+    axis: NSLayoutConstraint.Axis = .vertical,
+    spacing: CGFloat = 0,
+    @TetraUIViewBuilder withArrangedChildren arrangedChildren: () -> [UIView]
+  ) {
     self.init()
     self.axis = axis
     self.spacing = spacing
@@ -27,11 +29,51 @@ public extension UIStackView {
     }
 
     for child in children {
-      if let selfAdjustChild = child as? TetraUISelfAdjustable {
-        selfAdjustChild.selfAdjustProcess?(child, self, arrangedSubviews)
-        selfAdjustChild.selfAdjustProcess = nil
-      }
+      child.performSelfAjustment()
     }
+  }
+
+  /// Add arraged subview.
+  @discardableResult func arrangedSubviewAdded(_ subview: UIView) -> Self {
+    self.arrangedSubviewsAdded {
+      subview
+    }
+  }
+
+  /// Insert arraged subview.
+  @discardableResult func arangedSubview(_ subview: UIView, insertedAt index: Int) -> Self {
+    self.arrangedSubviewsInserted(at: index) {
+      subview
+    }
+  }
+
+  /// Add arraged subviews.
+  @discardableResult func arrangedSubviewsAdded(@TetraUIViewBuilder views: () -> [UIView]) -> Self {
+    let views = views()
+    for view in views {
+      addArrangedSubview(view)
+    }
+    for view in views {
+      view.performSelfAjustment()
+    }
+
+    return self.subviewsTagged()
+  }
+
+  /// Insert arraged subviews.
+  @discardableResult func arrangedSubviewsInserted(
+    at index: Int, @TetraUIViewBuilder views: () -> [UIView]
+  ) -> Self {
+    guard index <= subviews.count else { return self }
+    let views = views()
+    for (i, view) in views.enumerated() {
+      insertArrangedSubview(view, at: index + i)
+    }
+    for view in views {
+      view.performSelfAjustment()
+    }
+
+    return self.subviewsTagged()
   }
 
   /// Add custom spacing for this stack view.

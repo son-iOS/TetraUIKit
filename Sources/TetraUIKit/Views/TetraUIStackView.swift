@@ -33,9 +33,7 @@ open class TetraUIStackView: UIStackView, TetraUISelfAdjustable {
 
   open override func addArrangedSubview(_ view: UIView) {
     super.addArrangedSubview(view)
-    if let selfAdjustView = view as? TetraUISelfAdjustable {
-      selfAdjustView.selfAdjustProcess?(view, self, arrangedSubviews)
-      selfAdjustView.selfAdjustProcess = nil
-    }
+    view.performSelfAjustment()
+    subviewsTagged()
   }
 }

@@ -33,9 +33,7 @@ open class TetraUIView: UIView, TetraUISelfAdjustable {
 
   open override func addSubview(_ view: UIView) {
     super.addSubview(view)
-    if let selfAdjustView = view as? TetraUISelfAdjustable {
-      selfAdjustView.selfAdjustProcess?(view, self, subviews)
-      selfAdjustView.selfAdjustProcess = nil
-    }
+    view.performSelfAjustment()
+    subviewsTagged()
   }
 }

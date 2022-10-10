@@ -11,24 +11,13 @@ import Combine
 public extension UIView {
 
   /// Create a view with specified [children]. Children will be tagged with the order within the array.
-  convenience init(@TetraUIViewBuilder _ children: () -> [UIView]) {
+  convenience init(
+    @TetraUIViewBuilder children: () -> [UIView],
+    withInsets insets: UIEdgeInsets? = nil,
+    useSafeArea: Bool = false
+  ) {
     self.init()
-    let children = children()
-
-    for child in children {
-      addSubview(child)
-
-      if child.tag == 0 && subviews.count > 1 {
-        child.tag = subviews.count - 1
-      }
-    }
-
-    for child in children where child is TetraUISelfAdjustable {
-      if let selfAdjustChild = child as? TetraUISelfAdjustable {
-        selfAdjustChild.selfAdjustProcess?(child, self, subviews)
-        selfAdjustChild.selfAdjustProcess = nil
-      }
-    }
+    subviewsAdded(withInsets: insets, useSafeArea: useSafeArea, views: children)
   }
 
   /// Load a view from nib by [name] in [bundle].
@@ -179,7 +168,7 @@ public extension UIView {
 
   /// Set the corner radius for this view.
   @discardableResult func cornerRadius(
-    setToRadius radius: CGFloat,
+    setTo radius: CGFloat,
     clipsToBounds: Bool = false,
     masksToBounds: Bool = false) -> Self {
     layer.cornerRadius = radius
@@ -196,50 +185,76 @@ public extension UIView {
     cancelledWith cancellables: inout Set<AnyCancellable>
   ) -> Self {
     radius.sink { [weak self] radius in
-      self?.cornerRadius(setToRadius: radius, clipsToBounds: clipsToBounds, masksToBounds: masksToBounds)
+      self?.cornerRadius(setTo: radius, clipsToBounds: clipsToBounds, masksToBounds: masksToBounds)
     }.store(in: &cancellables)
 
     return self
   }
 
-  /// Add subview and align it to this view's safe area.
+  /// Add subview and align it to this view's bounding rect. If [useSafeArea] is true, it will use the view's safe area layout guide.
   @discardableResult func subview(
     _ subview: UIView,
-    addedWithSafeAreaInsets insets: UIEdgeInsets) -> Self {
-    self.addSubview(subview)
-    subview.edgesPinnedToEdges(of: self, withInset: insets, useSafeArea: true)
-
-    return self
-  }
-
-  /// Add subview and align it to this view's bounding rect.
-  @discardableResult func subview(
-    _ subview: UIView, addedWithInsets insets: UIEdgeInsets
+    addedWithInsets insets: UIEdgeInsets?,
+    useSafeArea: Bool = false
   ) -> Self {
-    self.addSubview(subview)
-    subview.edgesPinnedToEdges(of: self, withInset: insets)
-
-    return self
+    self.subviewsAdded(withInsets: insets, useSafeArea: useSafeArea) {
+      subview
+    }
   }
 
-  /// Insert a subview and align it with this view's safe area.
-  @discardableResult func subview(_ subview: UIView,
-                                  insertedAt index: Int,
-                                  withSafeAreaInsets insets: UIEdgeInsets) -> Self {
-    self.insertSubview(subview, at: index)
-    subview.edgesPinnedToEdges(of: self, withInset: insets, useSafeArea: true)
-
-    return self
+  /// Insert a subview and align it with this view's bounds. If [useSafeArea] is true, it will use the view's safe area layout guide.
+  @discardableResult func subview(
+    _ subview: UIView,
+    insertedAt index: Int,
+    withInsets insets: UIEdgeInsets?,
+    useSafeArea: Bool = false
+  ) -> Self {
+    self.subviewsInserted(at: index, edWithInsets: insets, useSafeArea: useSafeArea) {
+      subview
+    }
   }
 
-  /// Insert a subview and align it with this view's bounds.
-  @discardableResult func subview(_ subview: UIView,
-                                  insertedAt index: Int,
-                                  withInsets insets: UIEdgeInsets) -> Self {
-    self.insertSubview(subview, at: index)
-    subview.edgesPinnedToEdges(of: self, withInset: insets)
+  /// Add subviews
+  @discardableResult func subviewsAdded(
+    withInsets insets: UIEdgeInsets?,
+    useSafeArea: Bool = false,
+    @TetraUIViewBuilder views: () -> [UIView]
+  ) -> Self {
+    let views = views()
+    for view in views {
+      addSubview(view)
+      if let insets = insets {
+        view.edgesPinnedToEdges(of: self, withInset: insets, useSafeArea: useSafeArea)
+      }
+    }
+    for view in views {
+      view.performSelfAjustment()
+    }
 
-    return self
+    return self.subviewsTagged()
+  }
+
+  /// Insert subviews
+  @discardableResult func subviewsInserted(
+    at index: Int,
+    edWithInsets insets: UIEdgeInsets?,
+    useSafeArea: Bool = false,
+    @TetraUIViewBuilder views: () -> [UIView]
+  ) -> Self {
+    guard index <= subviews.count else { return self }
+
+    let views = views()
+    for (i, view) in views.enumerated() {
+      insertSubview(view, at: index + i)
+      if let insets = insets {
+        view.edgesPinnedToEdges(of: self, withInset: insets, useSafeArea: useSafeArea)
+      }
+    }
+    for view in views {
+      view.performSelfAjustment()
+    }
+
+    return self.subviewsTagged()
   }
   
   /// Assign this view to a property.
@@ -260,5 +275,22 @@ public extension UIView {
         isHidden = !newValue
       }
     }
+  }
+
+  /// Perform self adjustment if possible
+  internal func performSelfAjustment() {
+    guard let selfAdjustable = self as? TetraUISelfAdjustable else { return }
+    selfAdjustable.selfAdjustProcess?(self, self.superview, self.superview?.subviews)
+    selfAdjustable.selfAdjustProcess = nil
+  }
+
+  /// Perform tagging on subviews
+  @discardableResult internal func subviewsTagged() -> Self {
+    guard subviews.count > 1 else { return self }
+    for (index, subview) in subviews[1..<subviews.count].enumerated() {
+      subview.tag = subview.tag == 0 ? index : subview.tag
+    }
+
+    return self
   }
 }
