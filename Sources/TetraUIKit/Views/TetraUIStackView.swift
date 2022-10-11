@@ -10,30 +10,11 @@ import Combine
 
 /// Wrapper of `UIStackView`
 open class TetraUIStackView: UIStackView, TetraUISelfAdjustable {
-  public var selfAdjustProcess: ((UIView, UIView?, [UIView]?) -> Void)?
-
-  /// Set the property of [keyPath] to [value]
-  @discardableResult public func property<T>(
-    _ keyPath: ReferenceWritableKeyPath<TetraUIStackView, T>, setTo value: T
-  ) -> Self {
-    self[keyPath: keyPath] = value
-    return self
-  }
-
-  /// Use [publiisher] to set the property of [keyPath]
-  @discardableResult public func property<T>(
-    _ keyPath: ReferenceWritableKeyPath<TetraUIStackView, T>,
-    setBy publisher: AnyPublisher<T, Never>,
-    cancelledWith cancellables: inout Set<AnyCancellable>
-  ) -> Self {
-    publisher.assign(to: keyPath, on: self).store(in: &cancellables)
-
-    return self
-  }
+  public var selfAdjustProcess: ((TetraUIStackView, UIView?, [UIView]?) -> Void)?
 
   open override func addArrangedSubview(_ view: UIView) {
     super.addArrangedSubview(view)
-    view.performSelfAjustment()
+    (view as? (any TetraUISelfAdjustable))?.performSelfAjustment()
     subviewsTagged()
   }
 }

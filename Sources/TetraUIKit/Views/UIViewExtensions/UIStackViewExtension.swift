@@ -29,7 +29,7 @@ public extension UIStackView {
     }
 
     for child in children {
-      child.performSelfAjustment()
+      (child as? (any TetraUISelfAdjustable))?.performSelfAjustment()
     }
   }
 
@@ -54,7 +54,7 @@ public extension UIStackView {
       addArrangedSubview(view)
     }
     for view in views {
-      view.performSelfAjustment()
+      (view as? (any TetraUISelfAdjustable))?.performSelfAjustment()
     }
 
     return self.subviewsTagged()
@@ -70,7 +70,7 @@ public extension UIStackView {
       insertArrangedSubview(view, at: index + i)
     }
     for view in views {
-      view.performSelfAjustment()
+      (view as? (any TetraUISelfAdjustable))?.performSelfAjustment()
     }
 
     return self.subviewsTagged()

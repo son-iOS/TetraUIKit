@@ -2,7 +2,8 @@
 
 If you love the elegant syntax of `SwiftUI`, but stuck with `UIKit` because of legacy code, you have come to the right place. `TetraUIKit` aims to make the existing `UIKit` API looks more like `SwiftUI`.<br/>
 `TetraUIKit` also provides extensions to add constraints to views and layout guides in a declarative and more readable syntax instead of the imperative approach. <br/>
-With this library, you can now say goodbye to storyboard as it simplifies the effort to create UI programmatically.
+With this library, you can now say goodbye to storyboard as it simplifies the effort to create UI programmatically.<br/>
+**Disclaimer:** `TetraUIKit` does use a lot of run-time type inference which the compiler cannot perform some optimizations, so it's not as optimal as conventional view creation. Given that view creation happens mostly only once when loaded, it's not gonna be a big deal. But if you find yourself destroying and creating views rapidly (which is almost certainly not a good thing, you should try another approach), `TetraUIKit` is not the optimal solution.
  
  ### Attribute setter chaining
  View creation in `TetraUIKit` are built using builder pattern. Here is a sample usage of it:
@@ -56,8 +57,8 @@ thisView.edgesPinnedToEdges(
 ```
  
 ### Self-adjustable Views
-`TetraUIKit` introduces the concept of self-adjustable views. When a view conforms to this protocol by simply adding this to the class `var selfAdjustProcess: ((UIView, UIView?, [UIView]?) -> Void)?`, it can use this method to add constraints or other properties in a builder pattern manner: 
-```
+`TetraUIKit` introduces the concept of self-adjustable views. When a view conforms to this protocol by simply adding this to the class `var selfAdjustProcess: ((YourViewClass, UIView?, [UIView]?) -> Void)?`, it can use this method to add constraints or other properties in a builder pattern manner: 
+``` Swift
   func selfAdjust(
     independentlyAdjust: Bool = false,
     adjustProcess: @escaping (UIView, UIView?, [UIView]?) -> Void

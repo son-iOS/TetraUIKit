@@ -17,7 +17,7 @@ public extension UIView {
     useSafeArea: Bool = false
   ) {
     self.init()
-    subviewsAdded(withInsets: insets, useSafeArea: useSafeArea, views: children)
+    subviews(addedWithInsets: insets, useSafeArea: useSafeArea, views: children)
   }
 
   /// Load a view from nib by [name] in [bundle].
@@ -191,13 +191,19 @@ public extension UIView {
     return self
   }
 
+  /// Add a gesture recognizer to the view.
+  @discardableResult func gestureRecognizerAdded(_ recognizer: UIGestureRecognizer) -> Self {
+    addGestureRecognizer(recognizer)
+    return self
+  }
+
   /// Add subview and align it to this view's bounding rect. If [useSafeArea] is true, it will use the view's safe area layout guide.
   @discardableResult func subview(
     _ subview: UIView,
     addedWithInsets insets: UIEdgeInsets?,
     useSafeArea: Bool = false
   ) -> Self {
-    self.subviewsAdded(withInsets: insets, useSafeArea: useSafeArea) {
+    self.subviews(addedWithInsets: insets, useSafeArea: useSafeArea) {
       subview
     }
   }
@@ -209,14 +215,14 @@ public extension UIView {
     withInsets insets: UIEdgeInsets?,
     useSafeArea: Bool = false
   ) -> Self {
-    self.subviewsInserted(at: index, edWithInsets: insets, useSafeArea: useSafeArea) {
+    self.subviews(insertedAtIndex: index, edWithInsets: insets, useSafeArea: useSafeArea) {
       subview
     }
   }
 
   /// Add subviews
-  @discardableResult func subviewsAdded(
-    withInsets insets: UIEdgeInsets?,
+  @discardableResult func subviews(
+    addedWithInsets insets: UIEdgeInsets?,
     useSafeArea: Bool = false,
     @TetraUIViewBuilder views: () -> [UIView]
   ) -> Self {
@@ -228,15 +234,15 @@ public extension UIView {
       }
     }
     for view in views {
-      view.performSelfAjustment()
+      (view as? (any TetraUISelfAdjustable))?.performSelfAjustment()
     }
 
     return self.subviewsTagged()
   }
 
   /// Insert subviews
-  @discardableResult func subviewsInserted(
-    at index: Int,
+  @discardableResult func subviews(
+    insertedAtIndex index: Int,
     edWithInsets insets: UIEdgeInsets?,
     useSafeArea: Bool = false,
     @TetraUIViewBuilder views: () -> [UIView]
@@ -251,7 +257,7 @@ public extension UIView {
       }
     }
     for view in views {
-      view.performSelfAjustment()
+      (view as? (any TetraUISelfAdjustable))?.performSelfAjustment()
     }
 
     return self.subviewsTagged()
@@ -275,13 +281,6 @@ public extension UIView {
         isHidden = !newValue
       }
     }
-  }
-
-  /// Perform self adjustment if possible
-  internal func performSelfAjustment() {
-    guard let selfAdjustable = self as? TetraUISelfAdjustable else { return }
-    selfAdjustable.selfAdjustProcess?(self, self.superview, self.superview?.subviews)
-    selfAdjustable.selfAdjustProcess = nil
   }
 
   /// Perform tagging on subviews
