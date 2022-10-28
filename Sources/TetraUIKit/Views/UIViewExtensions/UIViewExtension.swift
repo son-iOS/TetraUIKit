@@ -32,8 +32,8 @@ public extension UIView {
   static func separatorView(
     axis: NSLayoutConstraint.Axis,
     color: UIColor? = .lightGray,
-    width: CGFloat? = nil,
-    height: CGFloat? = nil,
+    width: Double? = nil,
+    height: Double? = nil,
     insets: UIEdgeInsets? = nil
   ) -> UIView {
     let result = UIView()
@@ -136,7 +136,7 @@ public extension UIView {
   /// Add shadow to the this view.
   @discardableResult func shadow(setToColor color: UIColor,
                                  offset: CGSize,
-                                 radius: CGFloat,
+                                 radius: Double,
                                  opacity: Float) -> Self {
     self.layer.shadowColor = color.cgColor
     self.layer.shadowOffset = offset
@@ -152,7 +152,7 @@ public extension UIView {
   @discardableResult func shadow(
     setByColor color: AnyPublisher<UIColor, Never>,
     offset: AnyPublisher<CGSize, Never>,
-    radius: AnyPublisher<CGFloat, Never>,
+    radius: AnyPublisher<Double, Never>,
     opacity: AnyPublisher<Float, Never>,
     cancelledWith cancellables: inout Set<AnyCancellable>
   ) -> Self {
@@ -168,7 +168,7 @@ public extension UIView {
 
   /// Set the corner radius for this view.
   @discardableResult func cornerRadius(
-    setTo radius: CGFloat,
+    setTo radius: Double,
     clipsToBounds: Bool = false,
     masksToBounds: Bool = false) -> Self {
     layer.cornerRadius = radius
@@ -179,7 +179,7 @@ public extension UIView {
 
   /// Set the corner radius for this view using publisher.
   @discardableResult func cornerRadius(
-    setByRadius radius: AnyPublisher<CGFloat, Never>,
+    setByRadius radius: AnyPublisher<Double, Never>,
     clipsToBounds: Bool = true,
     masksToBounds: Bool = false,
     cancelledWith cancellables: inout Set<AnyCancellable>

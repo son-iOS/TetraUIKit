@@ -41,7 +41,7 @@ public extension TetraUIConstraintCompatible {
   internal static func makeConstraint<AnchorType>(
     firstAnchor: NSLayoutAnchor<AnchorType>?,
     secondAnchor: NSLayoutAnchor<AnchorType>?,
-    offset: CGFloat,
+    offset: Double,
     relation: TetraUIConstraintRelation
   ) -> NSLayoutConstraint? {
     guard let firstAnchor = firstAnchor, let secondAnchor = secondAnchor else { return nil }

@@ -17,7 +17,7 @@ public extension UIScrollView {
 
   /// Set zoom scale with publisher
   @discardableResult func zoomScale(
-    _ scale: AnyPublisher<CGFloat, Never>,
+    _ scale: AnyPublisher<Double, Never>,
     animated: Bool,
     cancelledWith cancellables: inout Set<AnyCancellable>
   ) -> Self {

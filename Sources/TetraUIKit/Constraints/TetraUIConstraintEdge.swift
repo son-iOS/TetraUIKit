@@ -106,7 +106,7 @@ public extension TetraUIConstraintCompatible {
     _ edge: TetraUIConstraintEdge,
     pinnedToOtherEdge otherEdge: TetraUIConstraintEdge,
     of other: TetraUIConstraintCompatible?,
-    withOffset offset: CGFloat = 0,
+    withOffset offset: Double = 0,
     relation: TetraUIConstraintRelation = .equal,
     useSafeArea: Bool = false
   ) -> Self {

@@ -13,7 +13,7 @@ public extension UIStackView {
   ///Children will be tagged with the order within the array.
   convenience init(
     axis: NSLayoutConstraint.Axis = .vertical,
-    spacing: CGFloat = 0,
+    spacing: Double = 0,
     @TetraUIViewBuilder withArrangedChildren arrangedChildren: () -> [UIView]
   ) {
     self.init()
@@ -77,14 +77,14 @@ public extension UIStackView {
   }
 
   /// Add custom spacing for this stack view.
-  @discardableResult func customSpacing(_ spacing: CGFloat, after view: UIView) -> Self {
+  @discardableResult func customSpacing(_ spacing: Double, after view: UIView) -> Self {
     self.setCustomSpacing(spacing, after: view)
     return self
   }
 
   /// Set custom spacing of this stack view using publisher.
   @discardableResult func customSpacing(
-    _ spacing: AnyPublisher<CGFloat, Never>,
+    _ spacing: AnyPublisher<Double, Never>,
     after view: UIView,
     cancelledWith cancellables: inout Set<AnyCancellable>
   ) -> Self {

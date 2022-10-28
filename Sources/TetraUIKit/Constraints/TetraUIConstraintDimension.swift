@@ -35,7 +35,7 @@ public extension TetraUIConstraintCompatible {
   /// Add [dimension] constraint using value from the provided [size], applied with [relation]
   @discardableResult func dimension(
     _ dimension: TetraUIConstraintDimension,
-    setTo size: CGFloat,
+    setTo size: Double,
     withRelation relation: TetraUIConstraintRelation = .equal
   ) -> Self {
     let thisDimensionAnchor = anchor(forDimension: dimension)
@@ -59,8 +59,8 @@ public extension TetraUIConstraintCompatible {
     _ dimension: TetraUIConstraintDimension,
     matchedToOtherDimension otherDimension: TetraUIConstraintDimension,
     of other: TetraUIConstraintCompatible?,
-    withMultiplier multiplier: CGFloat = 1,
-    offset: CGFloat = 0,
+    withMultiplier multiplier: Double = 1,
+    offset: Double = 0,
     relation: TetraUIConstraintRelation = .equal
   ) -> Self {
     guard let other = other else { return self }

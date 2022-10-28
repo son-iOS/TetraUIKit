@@ -75,7 +75,7 @@ public extension TetraUIConstraintCompatible {
   @discardableResult func constraintType(
     _ type: TetraUIConstraintType,
     placedBelowOrAfter other: TetraUIConstraintCompatible?,
-    withMultiplier multiplier: CGFloat
+    withMultiplier multiplier: Double
   ) -> Self {
     guard [.centerX, .centerY, .firstBaseline, .lastBaseline].contains(type),
           let other = other else {
@@ -118,7 +118,7 @@ public extension TetraUIConstraintCompatible {
   func constraintType(_ type: TetraUIConstraintType,
                       constrainedTo toType: TetraUIConstraintType,
                       of other: TetraUIConstraintCompatible?,
-                      withOffset offset: CGFloat = 0,
+                      withOffset offset: Double = 0,
                       relation: TetraUIConstraintRelation = .equal) -> Self {
     guard type.isCompatible(with: toType), let other = other else { return self }
 
