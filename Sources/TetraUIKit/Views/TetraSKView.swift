@@ -7,7 +7,6 @@
 
 import UIKit
 import SpriteKit
-import Combine
 
 /// Wrapper of `SKView`
 open class TetraSKView: SKView, TetraUISelfAdjustable {
