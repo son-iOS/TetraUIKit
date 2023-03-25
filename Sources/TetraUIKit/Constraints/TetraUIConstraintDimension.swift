@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 /// Enum used to specify dimension of a view or layout guide.
 public enum TetraUIConstraintDimension {
@@ -32,23 +33,62 @@ public extension TetraUIConstraintCompatible {
     return self
   }
 
+  /// Add [dimension] constraint using value from the provided [size], applied with [relation]. Can provide option [sizePublisher]
+  /// to update and [cancellables]. If no publisher then can
+  @discardableResult func dimension(
+    _ dimension: TetraUIConstraintDimension,
+    setTo size: Double,
+    updateWith sizePublisher: AnyPublisher<Double, Never>? = nil,
+    withRelation relation: TetraUIConstraintRelation = .equal,
+    cancelledWith cancellables: inout Set<AnyCancellable> // refactor to remove this and check if view is `TetraUIViewWithCancellables`
+  ) -> Self {
+    let thisDimensionAnchor = anchor(forDimension: dimension)
+    let constraint = {
+      switch relation {
+      case .equal:
+        return thisDimensionAnchor.constraint(equalToConstant: size)
+      case .greaterThanOrEqual:
+        return thisDimensionAnchor.constraint(greaterThanOrEqualToConstant: size)
+      case .lessThanOrEqual:
+        return thisDimensionAnchor.constraint(lessThanOrEqualToConstant: size)
+      }
+    }()
+    addConstraints { constraint }
+
+    if let sizePublisher = sizePublisher,
+    sizePublisher.sink { [weak constraint] size in
+      constraint?.constant = size
+    }.store(in: &cancellables)
+
+    return self
+  }
+
   /// Add [dimension] constraint using value from the provided [size], applied with [relation]
   @discardableResult func dimension(
     _ dimension: TetraUIConstraintDimension,
     setTo size: Double,
-    withRelation relation: TetraUIConstraintRelation = .equal
+    updateWith sizePublisher: AnyPublisher<Double, Never>,
+    withRelation relation: TetraUIConstraintRelation = .equal,
+    cancelledWith cancellables: inout Set<AnyCancellable>
   ) -> Self {
     let thisDimensionAnchor = anchor(forDimension: dimension)
-    addConstraints {
+    let constraint = {
       switch relation {
       case .equal:
-        thisDimensionAnchor.constraint(equalToConstant: size)
+        return thisDimensionAnchor.constraint(equalToConstant: size)
       case .greaterThanOrEqual:
-        thisDimensionAnchor.constraint(greaterThanOrEqualToConstant: size)
+        return thisDimensionAnchor.constraint(greaterThanOrEqualToConstant: size)
       case .lessThanOrEqual:
-        thisDimensionAnchor.constraint(lessThanOrEqualToConstant: size)
+        return thisDimensionAnchor.constraint(lessThanOrEqualToConstant: size)
       }
+    }()
+    addConstraints {
+      constraint
     }
+
+    sizePublisher.sink { [weak constraint] size in
+      constraint?.constant = size
+    }.store(in: &cancellables)
 
     return self
   }
