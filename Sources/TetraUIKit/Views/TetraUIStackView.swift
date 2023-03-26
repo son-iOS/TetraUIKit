@@ -9,7 +9,8 @@ import UIKit
 import Combine
 
 /// Wrapper of `UIStackView`
-open class TetraUIStackView: UIStackView, TetraUISelfAdjustable {
+open class TetraUIStackView: UIStackView, TetraUISelfAdjustable, TetraUIViewCancellable {
+  public var viewCancellables = Set<AnyCancellable>()
   public var selfAdjustProcess: ((TetraUIStackView, UIView?, [UIView]?) -> Void)?
 
   open override func addArrangedSubview(_ view: UIView) {

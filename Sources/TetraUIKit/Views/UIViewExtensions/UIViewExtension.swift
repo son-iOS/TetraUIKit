@@ -90,54 +90,44 @@ public extension UIView {
   /// Set the [priority] for content compression resistance in [axis] for this view.
   @discardableResult func contentCompressionResistancePriority(
     setTo priority: UILayoutPriority,
+    udpateWith priorityPublihser: AnyPublisher<UILayoutPriority, Never>? = nil,
     forAxis axis: NSLayoutConstraint.Axis
   ) -> Self {
     self.setContentCompressionResistancePriority(priority, for: axis)
-    return self
-  }
-
-  /// Set the content compression resistance priority using publisher [priority] in [axis] for this view.
-  /// Cancellable is stored in [cancellables].
-  @discardableResult func contentCompressionResistancePriority(
-    setBy priority: AnyPublisher<UILayoutPriority, Never>,
-    forAxis axis: NSLayoutConstraint.Axis,
-    cancelledWith cancellables: inout Set<AnyCancellable>
-  ) -> Self {
-    priority.sink { [weak self] priority in
-      self?.contentCompressionResistancePriority(setTo: priority, forAxis: axis)
-    }.store(in: &cancellables)
-
+    if let view = self as? TetraUIViewCancellable {
+      priorityPublihser?.sink(receiveValue: { [weak self] priority in
+        self?.setContentCompressionResistancePriority(priority, for: axis)
+      }).store(in: &view.viewCancellables)
+    }
     return self
   }
 
   /// Set the [priority] for content hugging in [axis] for this view.
   @discardableResult func contentHuggingPriority(
     setTo priority: UILayoutPriority,
+    udpateWith priorityPublihser: AnyPublisher<UILayoutPriority, Never>? = nil,
     forAxis axis: NSLayoutConstraint.Axis
   ) -> Self {
     self.setContentHuggingPriority(priority, for: axis)
-    return self
-  }
-
-  /// Set the content hugging priority using publisher [priority] in [axis] for this view.
-  /// Cancellable is stored in [cancellables].
-  @discardableResult func contentHuggingPriority(
-    setBy priority: AnyPublisher<UILayoutPriority, Never>,
-    forAxis axis: NSLayoutConstraint.Axis,
-    cancelledWith cancellables: inout Set<AnyCancellable>
-  ) -> Self {
-    priority.sink { [weak self] priority in
-      self?.contentHuggingPriority(setTo: priority, forAxis: axis)
-    }.store(in: &cancellables)
-
+    if let view = self as? TetraUIViewCancellable {
+      priorityPublihser?.sink(receiveValue: { [weak self] priority in
+        self?.setContentHuggingPriority(priority, for: axis)
+      }).store(in: &view.viewCancellables)
+    }
     return self
   }
 
   /// Add shadow to the this view.
-  @discardableResult func shadow(setToColor color: UIColor,
-                                 offset: CGSize,
-                                 radius: Double,
-                                 opacity: Float) -> Self {
+  @discardableResult func shadow(
+    setToColor color: UIColor,
+    updateWith colorPublisher: AnyPublisher<UIColor, Never>? = nil,
+    offset: CGSize,
+    udpateWith offsetPublisher: AnyPublisher<CGSize, Never>? = nil,
+    radius: Double,
+    updateWith radiusPublisher: AnyPublisher<Double, Never>? = nil,
+    opacity: Float,
+    updateWith opacityPublisher: AnyPublisher<Float, Never>? = nil
+  ) -> Self {
     self.layer.shadowColor = color.cgColor
     self.layer.shadowOffset = offset
     self.layer.shadowRadius = radius
@@ -145,23 +135,23 @@ public extension UIView {
     self.layer.masksToBounds = false
     self.clipsToBounds = false
 
-    return self
-  }
+    if let view = self as? TetraUIViewCancellable {
+      colorPublisher?.sink(receiveValue: { [weak self] color in
+        self?.layer.shadowColor = color.cgColor
+      }).store(in: &view.viewCancellables)
 
-  /// Add shadow to the this view using publishers.
-  @discardableResult func shadow(
-    setByColor color: AnyPublisher<UIColor, Never>,
-    offset: AnyPublisher<CGSize, Never>,
-    radius: AnyPublisher<Double, Never>,
-    opacity: AnyPublisher<Float, Never>,
-    cancelledWith cancellables: inout Set<AnyCancellable>
-  ) -> Self {
-    self.layer.masksToBounds = false
-    self.clipsToBounds = false
-    Publishers.CombineLatest4(color, offset, radius, opacity)
-      .sink { [weak self] color, offset, radius, opacity in
-        self?.shadow(setToColor: color, offset: offset, radius: radius, opacity: opacity)
-      }.store(in: &cancellables)
+      offsetPublisher?.sink(receiveValue: { [weak self] offset in
+        self?.layer.shadowOffset = offset
+      }).store(in: &view.viewCancellables)
+
+      radiusPublisher?.sink(receiveValue: { [weak self] radius in
+        self?.layer.shadowRadius = radius
+      }).store(in: &view.viewCancellables)
+
+      opacityPublisher?.sink(receiveValue: { [weak self] opacity in
+        self?.layer.shadowOpacity = opacity
+      }).store(in: &view.viewCancellables)
+    }
 
     return self
   }
@@ -169,25 +159,18 @@ public extension UIView {
   /// Set the corner radius for this view.
   @discardableResult func cornerRadius(
     setTo radius: Double,
+    updateWith radiusPublisher: AnyPublisher<Double, Never>? = nil,
     clipsToBounds: Bool = false,
-    masksToBounds: Bool = false) -> Self {
+    masksToBounds: Bool = false
+  ) -> Self {
     layer.cornerRadius = radius
     self.clipsToBounds = clipsToBounds
     layer.masksToBounds = masksToBounds
-    return self
-  }
-
-  /// Set the corner radius for this view using publisher.
-  @discardableResult func cornerRadius(
-    setByRadius radius: AnyPublisher<Double, Never>,
-    clipsToBounds: Bool = true,
-    masksToBounds: Bool = false,
-    cancelledWith cancellables: inout Set<AnyCancellable>
-  ) -> Self {
-    radius.sink { [weak self] radius in
-      self?.cornerRadius(setTo: radius, clipsToBounds: clipsToBounds, masksToBounds: masksToBounds)
-    }.store(in: &cancellables)
-
+    if let view = self as? TetraUIViewCancellable {
+      radiusPublisher?.sink(receiveValue: { [weak self] radius in
+        self?.layer.cornerRadius = radius
+      }).store(in: &view.viewCancellables)
+    }
     return self
   }
 

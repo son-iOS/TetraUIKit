@@ -9,6 +9,7 @@ import UIKit
 import Combine
 
 /// Wrapper of `UITextView`
-open class TetraUITextView: UITextView, TetraUISelfAdjustable {
+open class TetraUITextView: UITextView, TetraUISelfAdjustable, TetraUIViewCancellable {
+  public var viewCancellables = Set<AnyCancellable>()
   public var selfAdjustProcess: ((TetraUITextView, UIView?, [UIView]?) -> Void)?
 }

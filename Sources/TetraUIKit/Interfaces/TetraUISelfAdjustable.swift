@@ -49,46 +49,41 @@ public extension TetraUISelfAdjustable {
 public extension TetraUISelfAdjustable {
   /// Set the property of [keyPath] to [value]
   @discardableResult func property<T>(
-    _ keyPath: ReferenceWritableKeyPath<ViewType, T>, setTo value: T
-  ) -> Self {
-    (self as? ViewType)?[keyPath: keyPath] = value
-    return self
-  }
-
-  /// Use [publiisher] to set the property of [keyPath]
-  @discardableResult func property<T>(
     _ keyPath: ReferenceWritableKeyPath<ViewType, T>,
-    setBy publisher: AnyPublisher<T, Never>,
-    cancelledWith cancellables: inout Set<AnyCancellable>
+    setTo value: T,
+    updateWith valuePublisher: AnyPublisher<T, Never>? = nil
   ) -> Self {
     guard let this = self as? ViewType else { return self }
-    publisher.assign(to: keyPath, on: this).store(in: &cancellables)
+    this[keyPath: keyPath] = value
+    if let view = this as? TetraUIViewCancellable {
+      valuePublisher?
+        .sink(receiveValue: { [weak this] value in
+          this?[keyPath: keyPath] = value
+        })
+        .store(in: &view.viewCancellables)
+    }
     return self
   }
 
   /// Set the nested property of [keyPath] to [value]
   @discardableResult func nestedProperty<T>(
-    _ keyPath: KeyPath<ViewType, T>, setTo value: T
-  ) -> Self {
-    guard let keyPath = keyPath as? ReferenceWritableKeyPath<ViewType, T> else { return self }
-    (self as? ViewType)?[keyPath: keyPath] = value
-    return self
-  }
-
-  /// Use [publiisher] to set the nest property of [keyPath]
-  @discardableResult func nestedProperty<T>(
     _ keyPath: KeyPath<ViewType, T>,
-    setBy publisher: AnyPublisher<T, Never>,
-    cancelledWith cancellables: inout Set<AnyCancellable>
+    setTo value: T,
+    updateWith valuePublisher: AnyPublisher<T, Never>? = nil
   ) -> Self {
-    guard let keyPath = keyPath as? ReferenceWritableKeyPath<ViewType, T>,
-          let this = self as? ViewType else {
+    guard let this = self as? ViewType,
+          let keyPath = keyPath as? ReferenceWritableKeyPath<ViewType, T> else {
       return self
     }
-    publisher.assign(to: keyPath, on: this).store(in: &cancellables)
-
+    this[keyPath: keyPath] = value
+    if let view = this as? TetraUIViewCancellable {
+      valuePublisher?
+        .sink(receiveValue: { [weak this] value in
+          this?[keyPath: keyPath] = value
+        })
+        .store(in: &view.viewCancellables)
+    }
     return self
   }
-
 }
 

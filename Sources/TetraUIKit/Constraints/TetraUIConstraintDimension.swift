@@ -23,72 +23,54 @@ public extension TetraUIConstraintCompatible {
     }
   }
 
-  /// Add both width and height constraints using values from the provided `size`
-  @discardableResult func size(setTo size: CGSize) -> Self {
+  /// Add both width and height constraints using values from the provided `size`.  Can provide option [sizePublisher]
+  /// to update
+  @discardableResult func size(
+    setTo size: CGSize,
+    updateWith sizePublisher: AnyPublisher<CGSize, Never>? = nil
+  ) -> Self {
+    let widthConstraint = widthAnchor.constraint(equalToConstant: size.width)
+    let heightConstraint = heightAnchor.constraint(equalToConstant: size.height)
     addConstraints {
-      widthAnchor.constraint(equalToConstant: size.width)
-      heightAnchor.constraint(equalToConstant: size.height)
+      widthConstraint
+      heightConstraint
+    }
+
+    if let sizePublisher = sizePublisher, let view = self as? TetraUIViewCancellable {
+      sizePublisher.sink { [weak widthConstraint, weak heightConstraint] size in
+        widthConstraint?.constant = size.width
+        heightConstraint?.constant = size.height
+      }.store(in: &view.viewCancellables)
     }
 
     return self
   }
 
   /// Add [dimension] constraint using value from the provided [size], applied with [relation]. Can provide option [sizePublisher]
-  /// to update and [cancellables]. If no publisher then can
+  /// to update. Publisher only works if this view conforms to  [TetraUIViewCancellable]
   @discardableResult func dimension(
     _ dimension: TetraUIConstraintDimension,
     setTo size: Double,
     updateWith sizePublisher: AnyPublisher<Double, Never>? = nil,
-    withRelation relation: TetraUIConstraintRelation = .equal,
-    cancelledWith cancellables: inout Set<AnyCancellable> // refactor to remove this and check if view is `TetraUIViewWithCancellables`
+    withRelation relation: TetraUIConstraintRelation = .equal
   ) -> Self {
     let thisDimensionAnchor = anchor(forDimension: dimension)
-    let constraint = {
-      switch relation {
-      case .equal:
-        return thisDimensionAnchor.constraint(equalToConstant: size)
-      case .greaterThanOrEqual:
-        return thisDimensionAnchor.constraint(greaterThanOrEqualToConstant: size)
-      case .lessThanOrEqual:
-        return thisDimensionAnchor.constraint(lessThanOrEqualToConstant: size)
-      }
-    }()
+    let constraint: NSLayoutConstraint
+    switch relation {
+    case .equal:
+      constraint = thisDimensionAnchor.constraint(equalToConstant: size)
+    case .greaterThanOrEqual:
+      constraint = thisDimensionAnchor.constraint(greaterThanOrEqualToConstant: size)
+    case .lessThanOrEqual:
+      constraint = thisDimensionAnchor.constraint(lessThanOrEqualToConstant: size)
+    }
     addConstraints { constraint }
 
-    if let sizePublisher = sizePublisher,
-    sizePublisher.sink { [weak constraint] size in
-      constraint?.constant = size
-    }.store(in: &cancellables)
-
-    return self
-  }
-
-  /// Add [dimension] constraint using value from the provided [size], applied with [relation]
-  @discardableResult func dimension(
-    _ dimension: TetraUIConstraintDimension,
-    setTo size: Double,
-    updateWith sizePublisher: AnyPublisher<Double, Never>,
-    withRelation relation: TetraUIConstraintRelation = .equal,
-    cancelledWith cancellables: inout Set<AnyCancellable>
-  ) -> Self {
-    let thisDimensionAnchor = anchor(forDimension: dimension)
-    let constraint = {
-      switch relation {
-      case .equal:
-        return thisDimensionAnchor.constraint(equalToConstant: size)
-      case .greaterThanOrEqual:
-        return thisDimensionAnchor.constraint(greaterThanOrEqualToConstant: size)
-      case .lessThanOrEqual:
-        return thisDimensionAnchor.constraint(lessThanOrEqualToConstant: size)
-      }
-    }()
-    addConstraints {
-      constraint
+    if let sizePublisher = sizePublisher, let view = self as? TetraUIViewCancellable {
+      sizePublisher.sink { [weak constraint] size in
+        constraint?.constant = size
+      }.store(in: &view.viewCancellables)
     }
-
-    sizePublisher.sink { [weak constraint] size in
-      constraint?.constant = size
-    }.store(in: &cancellables)
 
     return self
   }
@@ -101,33 +83,42 @@ public extension TetraUIConstraintCompatible {
     of other: TetraUIConstraintCompatible?,
     withMultiplier multiplier: Double = 1,
     offset: Double = 0,
+    updateOffsetWith offsetPublisher: AnyPublisher<Double, Never>? = nil,
     relation: TetraUIConstraintRelation = .equal
   ) -> Self {
     guard let other = other else { return self }
 
     let thisDimensionAnchor = anchor(forDimension: dimension)
     let otherDimensionAnchor = other.anchor(forDimension: otherDimension)
-    addConstraints {
-      switch relation {
-      case .equal:
-        thisDimensionAnchor.constraint(
-          equalTo: otherDimensionAnchor,
-          multiplier: multiplier,
-          constant: offset
-        )
-      case .greaterThanOrEqual:
-        thisDimensionAnchor.constraint(
-          greaterThanOrEqualTo: otherDimensionAnchor,
-          multiplier: multiplier,
-          constant: offset
-        )
-      case .lessThanOrEqual:
-        thisDimensionAnchor.constraint(
-          lessThanOrEqualTo: otherDimensionAnchor,
-          multiplier: multiplier,
-          constant: offset
-        )
-      }
+
+    let constraint: NSLayoutConstraint
+    switch relation {
+    case .equal:
+      constraint = thisDimensionAnchor.constraint(
+        equalTo: otherDimensionAnchor,
+        multiplier: multiplier,
+        constant: offset
+      )
+    case .greaterThanOrEqual:
+      constraint = thisDimensionAnchor.constraint(
+        greaterThanOrEqualTo: otherDimensionAnchor,
+        multiplier: multiplier,
+        constant: offset
+      )
+    case .lessThanOrEqual:
+      constraint = thisDimensionAnchor.constraint(
+        lessThanOrEqualTo: otherDimensionAnchor,
+        multiplier: multiplier,
+        constant: offset
+      )
+    }
+
+    addConstraints { constraint }
+
+    if let offsetPublisher = offsetPublisher, let view = self as? TetraUIViewCancellable {
+      offsetPublisher.sink { [weak constraint] offset in
+        constraint?.constant = offset
+      }.store(in: &view.viewCancellables)
     }
 
     return self

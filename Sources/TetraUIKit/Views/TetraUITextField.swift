@@ -9,6 +9,7 @@ import UIKit
 import Combine
 
 /// Wrapper of `UITextField`
-open class TetraUITextField: UITextField, TetraUISelfAdjustable {
+open class TetraUITextField: UITextField, TetraUISelfAdjustable, TetraUIViewCancellable {
+  public var viewCancellables = Set<AnyCancellable>()
   public var selfAdjustProcess: ((TetraUITextField, UIView?, [UIView]?) -> Void)?
 }

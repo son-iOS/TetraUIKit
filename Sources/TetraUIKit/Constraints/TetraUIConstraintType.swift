@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 /// Enum to specify generic constraint type
 public enum TetraUIConstraintType {
@@ -119,26 +120,34 @@ public extension TetraUIConstraintCompatible {
                       constrainedTo toType: TetraUIConstraintType,
                       of other: TetraUIConstraintCompatible?,
                       withOffset offset: Double = 0,
+                      updateOffsetWith offsetPublisher: AnyPublisher<Double, Never>? = nil,
                       relation: TetraUIConstraintRelation = .equal) -> Self {
     guard type.isCompatible(with: toType), let other = other else { return self }
 
-    addConstraints {
-      switch type {
-      case .centerY, .firstBaseline, .lastBaseline, .top, .bottom:
-        Self.makeConstraint(
-          firstAnchor: yAnchor(forType: type),
-          secondAnchor: other.yAnchor(forType: toType),
-          offset: offset,
-          relation: relation
-        )
-      case .centerX, .leading, .trailing:
-        Self.makeConstraint(
-          firstAnchor: xAnchor(forType: type),
-          secondAnchor: other.xAnchor(forType: toType),
-          offset: offset,
-          relation: relation
-        )
-      }
+    let constraint: NSLayoutConstraint?
+    switch type {
+    case .centerY, .firstBaseline, .lastBaseline, .top, .bottom:
+      constraint = Self.makeConstraint(
+        firstAnchor: yAnchor(forType: type),
+        secondAnchor: other.yAnchor(forType: toType),
+        offset: offset,
+        relation: relation
+      )
+    case .centerX, .leading, .trailing:
+      constraint = Self.makeConstraint(
+        firstAnchor: xAnchor(forType: type),
+        secondAnchor: other.xAnchor(forType: toType),
+        offset: offset,
+        relation: relation
+      )
+    }
+
+    addConstraints { constraint }
+
+    if let offsetPublisher = offsetPublisher, let view = self as? TetraUIViewCancellable {
+      offsetPublisher.sink { [weak constraint] offset in
+        constraint?.constant = offset
+      }.store(in: &view.viewCancellables)
     }
 
     return self

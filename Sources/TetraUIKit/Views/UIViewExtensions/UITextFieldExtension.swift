@@ -30,4 +30,30 @@ public extension UITextField {
     self.delegate = delegate
     return self
   }
+
+  @discardableResult func text(
+    setTo text: String?,
+    updateWith textPublisher: AnyPublisher<String?, Never>? = nil
+  ) -> Self {
+    self.text = text
+    if let view = self as? TetraUIViewCancellable {
+      textPublisher?.sink(receiveValue: { [weak self] text in
+        self?.text = text
+      }).store(in: &view.viewCancellables)
+    }
+    return self
+  }
+
+  @discardableResult func attributedText(
+    setTo text: NSAttributedString?,
+    updateWith textPublisher: AnyPublisher<NSAttributedString?, Never>? = nil
+  ) -> Self {
+    self.attributedText = text
+    if let view = self as? TetraUIViewCancellable {
+      textPublisher?.sink(receiveValue: { [weak self] text in
+        self?.attributedText = text
+      }).store(in: &view.viewCancellables)
+    }
+    return self
+  }
 }

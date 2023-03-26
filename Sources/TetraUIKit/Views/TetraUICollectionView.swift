@@ -9,6 +9,7 @@ import UIKit
 import Combine
 
 /// Wrapper of `UICollectionView`
-open class TetraUICollectionView: UICollectionView, TetraUISelfAdjustable {
+open class TetraUICollectionView: UICollectionView, TetraUISelfAdjustable, TetraUIViewCancellable {
+  public var viewCancellables = Set<AnyCancellable>()
   public var selfAdjustProcess: ((TetraUICollectionView, UIView?, [UIView]?) -> Void)?
 }

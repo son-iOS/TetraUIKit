@@ -76,23 +76,18 @@ public extension UIStackView {
     return self.subviewsTagged()
   }
 
-  /// Add custom spacing for this stack view.
-  @discardableResult func customSpacing(_ spacing: Double, after view: UIView) -> Self {
-    self.setCustomSpacing(spacing, after: view)
-    return self
-  }
-
   /// Set custom spacing of this stack view using publisher.
   @discardableResult func customSpacing(
-    _ spacing: AnyPublisher<Double, Never>,
-    after view: UIView,
-    cancelledWith cancellables: inout Set<AnyCancellable>
+    setTo spacing: Double,
+    updateWith spacingPublisher: AnyPublisher<Double, Never>? = nil,
+    after view: UIView
   ) -> Self {
-    spacing.sink { [weak self, weak view] spacing in
-      if let view = view {
-        self?.customSpacing(spacing, after: view)
-      }
-    }.store(in: &cancellables)
+    self.setCustomSpacing(spacing, after: view)
+    if let view = self as? TetraUIViewCancellable {
+      spacingPublisher?.sink(receiveValue: { [weak self] spacing in
+        self?.setCustomSpacing(spacing, after: view)
+      }).store(in: &view.viewCancellables)
+    }
 
     return self
   }
@@ -110,17 +105,26 @@ public extension UIStackView {
 
   /// Set padding of this stack view using publisher.
   @discardableResult func insets(
-    _ insets: AnyPublisher<UIEdgeInsets, Never>,
+    setTo insets: UIEdgeInsets,
+    updateWith insetsPublisher: AnyPublisher<UIEdgeInsets, Never>? = nil,
     cancelledWith cancellables: inout Set<AnyCancellable>
   ) -> Self {
     self.isLayoutMarginsRelativeArrangement = true
-    insets.sink { [weak self] insets in
-      let convertedInsets = UIEdgeInsets(top: insets.top,
-                                         left: insets.left,
-                                         bottom: -insets.bottom,
-                                         right: -insets.right)
-      self?.layoutMargins = convertedInsets
-    }.store(in: &cancellables)
+    let convertedInsets = UIEdgeInsets(top: insets.top,
+                                       left: insets.left,
+                                       bottom: -insets.bottom,
+                                       right: -insets.right)
+    self.layoutMargins = convertedInsets
+
+    if let view = self as? TetraUIViewCancellable {
+      insetsPublisher?.sink(receiveValue: { [weak self] insets in
+        let convertedInsets = UIEdgeInsets(top: insets.top,
+                                           left: insets.left,
+                                           bottom: -insets.bottom,
+                                           right: -insets.right)
+        self?.layoutMargins = convertedInsets
+      }).store(in: &view.viewCancellables)
+    }
 
     return self
   }

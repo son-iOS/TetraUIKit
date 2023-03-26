@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import Combine
 
 /// Enum used to specify constraint edge.
 public enum TetraUIConstraintEdge: CaseIterable {
@@ -52,37 +53,42 @@ public extension TetraUIConstraintCompatible {
     of other: TetraUIConstraintCompatible?,
     excludingEdeges edges: Set<TetraUIConstraintEdge>? = nil,
     withInset insets: UIEdgeInsets = .zero,
+    updateInsetWith insetsPublihser: AnyPublisher<UIEdgeInsets, Never>? = nil,
     relation: TetraUIConstraintRelation = .equal,
     useSafeArea: Bool = false
   ) -> Self {
     guard let other = useSafeArea ? other?.safeAreaLayoutGuide : other else { return self }
 
     let edges = TetraUIConstraintEdge.allCases.filter({ !(edges?.contains($0) ?? false) })
-    let constraints = edges.map { edge -> NSLayoutConstraint? in
+    var leadingConstraint: NSLayoutConstraint?
+    var trailingConstraint: NSLayoutConstraint?
+    var topConstraint: NSLayoutConstraint?
+    var bottomConstraint: NSLayoutConstraint?
+    for edge in edges {
       switch edge {
       case .leading:
-        return Self.makeConstraint(
+        leadingConstraint = Self.makeConstraint(
           firstAnchor: leadingAnchor,
           secondAnchor: other.leadingAnchor,
           offset: insets.left,
           relation: relation
         )
       case .trailing:
-        return Self.makeConstraint(
+        trailingConstraint = Self.makeConstraint(
           firstAnchor: trailingAnchor,
           secondAnchor: other.trailingAnchor,
           offset: insets.right,
           relation: relation
         )
       case .top:
-        return Self.makeConstraint(
+        topConstraint = Self.makeConstraint(
           firstAnchor: topAnchor,
           secondAnchor: other.topAnchor,
           offset: insets.top,
           relation: relation
         )
       case .bottom:
-        return Self.makeConstraint(
+        bottomConstraint = Self.makeConstraint(
           firstAnchor: bottomAnchor,
           secondAnchor: other.bottomAnchor,
           offset: insets.bottom,
@@ -91,7 +97,24 @@ public extension TetraUIConstraintCompatible {
       }
     }
     addConstraints {
-      constraints.compactMap({ $0 })
+      leadingConstraint
+      trailingConstraint
+      topConstraint
+      bottomConstraint
+    }
+
+    if let insetsPublihser = insetsPublihser, let view = self as? TetraUIViewCancellable {
+      insetsPublihser.sink { [
+        weak leadingConstraint,
+        weak trailingConstraint,
+        weak topConstraint,
+        weak bottomConstraint
+      ] insets in
+        leadingConstraint?.constant = insets.left
+        trailingConstraint?.constant = insets.right
+        topConstraint?.constant = insets.top
+        bottomConstraint?.constant = insets.bottom
+      }.store(in: &view.viewCancellables)
     }
 
     return self
@@ -107,6 +130,7 @@ public extension TetraUIConstraintCompatible {
     pinnedToOtherEdge otherEdge: TetraUIConstraintEdge,
     of other: TetraUIConstraintCompatible?,
     withOffset offset: Double = 0,
+    updateOffsetWith offsetPublisher: AnyPublisher<Double, Never>? = nil,
     relation: TetraUIConstraintRelation = .equal,
     useSafeArea: Bool = false
   ) -> Self {
@@ -115,23 +139,30 @@ public extension TetraUIConstraintCompatible {
       return self
     }
 
-    addConstraints {
-      switch edge {
-      case .leading, .trailing:
-        Self.makeConstraint(
-          firstAnchor: xAnchor(forEdge: edge),
-          secondAnchor: other.xAnchor(forEdge: otherEdge),
-          offset: offset,
-          relation: relation
-        )
-      case .top, .bottom:
-        Self.makeConstraint(
-          firstAnchor: yAnchor(forEdge: edge),
-          secondAnchor: other.yAnchor(forEdge: otherEdge),
-          offset: offset,
-          relation: relation
-        )
-      }
+    let constraint: NSLayoutConstraint?
+    switch edge {
+    case .leading, .trailing:
+      constraint = Self.makeConstraint(
+        firstAnchor: xAnchor(forEdge: edge),
+        secondAnchor: other.xAnchor(forEdge: otherEdge),
+        offset: offset,
+        relation: relation
+      )
+    case .top, .bottom:
+      constraint = Self.makeConstraint(
+        firstAnchor: yAnchor(forEdge: edge),
+        secondAnchor: other.yAnchor(forEdge: otherEdge),
+        offset: offset,
+        relation: relation
+      )
+    }
+
+    addConstraints { constraint }
+
+    if let offsetPublisher = offsetPublisher, let view = self as? TetraUIViewCancellable {
+      offsetPublisher.sink { [weak constraint] offset in
+        constraint?.constant = offset
+      }.store(in: &view.viewCancellables)
     }
 
     return self

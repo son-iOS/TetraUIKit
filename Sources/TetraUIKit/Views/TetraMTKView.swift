@@ -6,8 +6,10 @@
 //
 
 import MetalKit
+import Combine
 
 /// Wrapper of `MTKView`
-open class TetraMTKView: MTKView, TetraUISelfAdjustable {
+open class TetraMTKView: MTKView, TetraUISelfAdjustable, TetraUIViewCancellable {
+  public var viewCancellables = Set<AnyCancellable>()
   public var selfAdjustProcess: ((TetraMTKView, UIView?, [UIView]?) -> Void)?
 }

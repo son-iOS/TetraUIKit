@@ -9,7 +9,8 @@ import UIKit
 import Combine
 
 /// Wrapper of `UIScrollView`
-open class TetraUIScrollView: UIScrollView, TetraUISelfAdjustable {
+open class TetraUIScrollView: UIScrollView, TetraUISelfAdjustable, TetraUIViewCancellable {
+  public var viewCancellables = Set<AnyCancellable>()
   public var selfAdjustProcess: ((TetraUIScrollView, UIView?, [UIView]?) -> Void)?
   
   open override func addSubview(_ view: UIView) {

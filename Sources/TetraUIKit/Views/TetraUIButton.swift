@@ -9,6 +9,7 @@ import UIKit
 import Combine
 
 /// Wrapper of `UIButton`
-open class TetraUIButton: UIButton, TetraUISelfAdjustable {
+open class TetraUIButton: UIButton, TetraUISelfAdjustable, TetraUIViewCancellable {
+  public var viewCancellables = Set<AnyCancellable>()
   public var selfAdjustProcess: ((TetraUIButton, UIView?, [UIView]?) -> Void)?
 }

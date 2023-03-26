@@ -9,6 +9,7 @@ import UIKit
 import Combine
 
 /// Wrapper of `UILabel`
-open class TetraUILabel: UILabel, TetraUISelfAdjustable {
+open class TetraUILabel: UILabel, TetraUISelfAdjustable, TetraUIViewCancellable {
+  public var viewCancellables = Set<AnyCancellable>()
   public var selfAdjustProcess: ((TetraUILabel, UIView?, [UIView]?) -> Void)?
 }

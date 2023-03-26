@@ -7,8 +7,10 @@
 
 import UIKit
 import SpriteKit
+import Combine
 
 /// Wrapper of `SKView`
-open class TetraSKView: SKView, TetraUISelfAdjustable {
+open class TetraSKView: SKView, TetraUISelfAdjustable, TetraUIViewCancellable {
+  public var viewCancellables = Set<AnyCancellable>()
   public var selfAdjustProcess: ((TetraSKView, UIView?, [UIView]?) -> Void)?
 }
