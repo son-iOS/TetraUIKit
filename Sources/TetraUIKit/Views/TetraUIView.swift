@@ -16,6 +16,5 @@ open class TetraUIView: UIView, TetraUISelfAdjustable, TetraUIViewCancellable {
   open override func addSubview(_ view: UIView) {
     super.addSubview(view)
     (view as? (any TetraUISelfAdjustable))?.performSelfAjustment()
-    subviewsTagged()
   }
 }

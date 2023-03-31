@@ -220,7 +220,7 @@ public extension UIView {
       (view as? (any TetraUISelfAdjustable))?.performSelfAjustment()
     }
 
-    return self.subviewsTagged()
+    return self
   }
 
   /// Insert subviews
@@ -243,7 +243,7 @@ public extension UIView {
       (view as? (any TetraUISelfAdjustable))?.performSelfAjustment()
     }
 
-    return self.subviewsTagged()
+    return self
   }
   
   /// Assign this view to a property.
@@ -283,15 +283,5 @@ public extension UIView {
 
     layer.position = position
     layer.anchorPoint = point
-  }
-
-  /// Perform tagging on subviews
-  @discardableResult internal func subviewsTagged() -> Self {
-    guard subviews.count > 1 else { return self }
-    for (index, subview) in subviews[1..<subviews.count].enumerated() {
-      subview.tag = subview.tag == 0 ? index : subview.tag
-    }
-
-    return self
   }
 }

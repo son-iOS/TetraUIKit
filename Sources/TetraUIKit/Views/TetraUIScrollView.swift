@@ -16,7 +16,6 @@ open class TetraUIScrollView: UIScrollView, TetraUISelfAdjustable, TetraUIViewCa
   open override func addSubview(_ view: UIView) {
     super.addSubview(view)
     (view as? (any TetraUISelfAdjustable))?.performSelfAjustment()
-    subviewsTagged()
   }
 }
 

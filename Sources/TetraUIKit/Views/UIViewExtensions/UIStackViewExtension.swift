@@ -57,7 +57,7 @@ public extension UIStackView {
       (view as? (any TetraUISelfAdjustable))?.performSelfAjustment()
     }
 
-    return self.subviewsTagged()
+    return self
   }
 
   /// Insert arraged subviews.
@@ -73,7 +73,7 @@ public extension UIStackView {
       (view as? (any TetraUISelfAdjustable))?.performSelfAjustment()
     }
 
-    return self.subviewsTagged()
+    return self
   }
 
   /// Set custom spacing of this stack view using publisher.

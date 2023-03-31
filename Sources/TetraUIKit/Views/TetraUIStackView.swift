@@ -16,6 +16,5 @@ open class TetraUIStackView: UIStackView, TetraUISelfAdjustable, TetraUIViewCanc
   open override func addArrangedSubview(_ view: UIView) {
     super.addArrangedSubview(view)
     (view as? (any TetraUISelfAdjustable))?.performSelfAjustment()
-    subviewsTagged()
   }
 }
