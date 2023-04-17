@@ -284,4 +284,17 @@ public extension UIView {
     layer.position = position
     layer.anchorPoint = point
   }
+
+  func firstChildOfType<T: UIView>(_ type: T.Type) -> T? {
+    if let child = subviews.first(where: { $0 is T }) {
+      return child as? T
+    } else {
+      for subview in subviews {
+        if let child = subview.firstChildOfType(T.self) {
+          return child
+        }
+      }
+      return nil
+    }
+  }
 }
