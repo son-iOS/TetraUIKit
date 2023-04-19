@@ -13,7 +13,7 @@ open class TetraUIStackView: UIStackView, TetraUISelfAdjustable, TetraUIViewCanc
   public var viewCancellables = Set<AnyCancellable>()
   public var selfAdjustProcess: ((TetraUIStackView, UIView?, [UIView]?) -> Void)?
 
-  open override func addArrangedSubview(_ view: UIView) {
+  func addSelfAdjustableArrangedSubview(_ view: UIView) {
     super.addArrangedSubview(view)
     (view as? (any TetraUISelfAdjustable))?.performSelfAjustment()
   }

@@ -22,10 +22,6 @@ public extension UIStackView {
     let children = arrangedChildren()
     for child in children {
       addArrangedSubview(child)
-
-      if child.tag == 0 && arrangedSubviews.count > 1 {
-        child.tag = arrangedSubviews.count - 1
-      }
     }
 
     for child in children {
