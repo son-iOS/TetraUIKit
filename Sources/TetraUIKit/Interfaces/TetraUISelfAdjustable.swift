@@ -58,6 +58,7 @@ public extension TetraUISelfAdjustable {
     this[keyPath: keyPath] = value
     if let view = this as? TetraUIViewCancellable {
       valuePublisher?
+        .receive(on: DispatchQueue.main)
         .sink(receiveValue: { [weak this] value in
           if let duration = animationDuration {
             UIView.animate(withDuration: duration) {

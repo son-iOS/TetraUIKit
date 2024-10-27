@@ -7,7 +7,7 @@
 
 import UIKit
 
-public protocol TetraUIConstraintCompatible: AnyObject {
+@MainActor public protocol TetraUIConstraintCompatible: AnyObject {
   var widthAnchor: NSLayoutDimension { get }
   var heightAnchor: NSLayoutDimension { get }
 
@@ -29,7 +29,7 @@ public protocol TetraUIConstraintCompatible: AnyObject {
 }
 
 public extension TetraUIConstraintCompatible {
-  func addConstraints(@TetraUIConstraintBuilder _ constraints: () -> [NSLayoutConstraint]) {
+  @MainActor func addConstraints(@TetraUIConstraintBuilder _ constraints: () -> [NSLayoutConstraint]) {
     translatesAutoresizingMaskIntoConstraints = false
 
     let constraints = constraints()

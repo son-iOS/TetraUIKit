@@ -9,7 +9,7 @@ import UIKit
 import Combine
 
 /// Enum to specify generic constraint type
-public enum TetraUIConstraintType {
+public enum TetraUIConstraintType: Sendable {
   case firstBaseline, lastBaseline
   case centerX, centerY
   case leading, trailing, top, bottom

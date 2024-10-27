@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 /// Enum used to specify constraint edge.
-public enum TetraUIConstraintEdge: CaseIterable {
+public enum TetraUIConstraintEdge: CaseIterable, Sendable {
   case leading, trailing, top, bottom
 
   private static let xEdges: [TetraUIConstraintEdge] = [.leading, .trailing]
