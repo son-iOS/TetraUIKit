@@ -146,6 +146,7 @@ public extension TetraUIConstraintCompatible {
 
     if let offsetPublisher = offsetPublisher, let view = self as? TetraUIViewCancellable {
       offsetPublisher.sink { [weak constraint] offset in
+        guard offset != .infinity && offset != -.infinity && offset != .nan else { return}
         constraint?.constant = offset
       }.store(in: &view.viewCancellables)
     }
