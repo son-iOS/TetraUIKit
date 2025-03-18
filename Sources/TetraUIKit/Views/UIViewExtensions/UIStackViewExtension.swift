@@ -5,8 +5,11 @@
 //  Created by Son Nguyen on 1/11/22.
 //
 
-import UIKit
 import Combine
+
+#if os(iOS)
+
+import UIKit
 
 public extension UIStackView {
   /// Create a stack view in [axis] directionwith specified [arrangedChildren],  each child is [spacing] apart from each other.
@@ -125,3 +128,5 @@ public extension UIStackView {
     return self
   }
 }
+
+#endif

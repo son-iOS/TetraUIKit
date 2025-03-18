@@ -5,6 +5,8 @@
 //  Created by Son Nguyen on 05/10/2022.
 //
 
+#if os(iOS)
+
 import UIKit
 
 public extension UITableView {
@@ -32,3 +34,5 @@ public extension UITableView {
     return self 
   }
 }
+
+#endif

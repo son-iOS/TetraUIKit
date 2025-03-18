@@ -5,8 +5,12 @@
 //  Created by Son Nguyen on 2/25/22.
 //
 
-import UIKit
 import Combine
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 /// Enum to specify generic constraint type
 public enum TetraUIConstraintType: Sendable {

@@ -5,8 +5,12 @@
 //  Created by Son Nguyen on 2/26/22.
 //
 
-import UIKit
 import Combine
+#if os(iOS)
+import UIKit
+#elseif os(macOS)
+import AppKit
+#endif
 
 /// Enum used to specify dimension of a view or layout guide.
 public enum TetraUIConstraintDimension {

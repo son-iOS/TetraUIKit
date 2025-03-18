@@ -5,7 +5,6 @@
 //  Created by Son Nguyen on 2/26/22.
 //
 
-import UIKit
 import SwiftUI
 import Combine
 
@@ -45,6 +44,8 @@ public extension TetraUIConstraintCompatible {
       return nil
     }
   }
+
+#if os(iOS)
 
   /// Add constraints to all edges of this view or layout guide to [other], excluding [edges].
   /// You can also add [insets] and [relation] to the constraints.
@@ -119,6 +120,84 @@ public extension TetraUIConstraintCompatible {
 
     return self
   }
+
+#elseif os(macOS)
+
+  /// Add constraints to all edges of this view or layout guide to [other], excluding [edges].
+  /// You can also add [insets] and [relation] to the constraints.
+  /// If [userSafeArea] is true, the safe area layout guide of a view will be used.
+  @discardableResult func edgesPinnedToEdges(
+    of other: TetraUIConstraintCompatible?,
+    excludingEdeges edges: Set<TetraUIConstraintEdge>? = nil,
+    withInset insets: NSEdgeInsets = NSEdgeInsetsZero,
+    updateInsetWith insetsPublihser: AnyPublisher<NSEdgeInsets, Never>? = nil,
+    relation: TetraUIConstraintRelation = .equal,
+    useSafeArea: Bool = false
+  ) -> Self {
+    guard let other = useSafeArea ? other?.safeAreaLayoutGuide : other else { return self }
+
+    let edges = TetraUIConstraintEdge.allCases.filter({ !(edges?.contains($0) ?? false) })
+    var leadingConstraint: NSLayoutConstraint?
+    var trailingConstraint: NSLayoutConstraint?
+    var topConstraint: NSLayoutConstraint?
+    var bottomConstraint: NSLayoutConstraint?
+    for edge in edges {
+      switch edge {
+      case .leading:
+        leadingConstraint = Self.makeConstraint(
+          firstAnchor: leadingAnchor,
+          secondAnchor: other.leadingAnchor,
+          offset: insets.left,
+          relation: relation
+        )
+      case .trailing:
+        trailingConstraint = Self.makeConstraint(
+          firstAnchor: trailingAnchor,
+          secondAnchor: other.trailingAnchor,
+          offset: insets.right,
+          relation: relation
+        )
+      case .top:
+        topConstraint = Self.makeConstraint(
+          firstAnchor: topAnchor,
+          secondAnchor: other.topAnchor,
+          offset: insets.top,
+          relation: relation
+        )
+      case .bottom:
+        bottomConstraint = Self.makeConstraint(
+          firstAnchor: bottomAnchor,
+          secondAnchor: other.bottomAnchor,
+          offset: insets.bottom,
+          relation: relation
+        )
+      }
+    }
+    addConstraints {
+      leadingConstraint
+      trailingConstraint
+      topConstraint
+      bottomConstraint
+    }
+
+    if let insetsPublihser = insetsPublihser, let view = self as? TetraUIViewCancellable {
+      insetsPublihser.sink { [
+        weak leadingConstraint,
+        weak trailingConstraint,
+        weak topConstraint,
+        weak bottomConstraint
+      ] insets in
+        leadingConstraint?.constant = insets.left
+        trailingConstraint?.constant = insets.right
+        topConstraint?.constant = insets.top
+        bottomConstraint?.constant = insets.bottom
+      }.store(in: &view.viewCancellables)
+    }
+
+    return self
+  }
+
+#endif
 
   /// Add constraints to [edge] of this view or layout guide to [other]'s [otherEdge].
   /// You can also add [insets] and [relation] to the constraints.

@@ -5,7 +5,11 @@
 //  Created by Son Nguyen on 2/26/22.
 //
 
+#if canImport(UIKit)
 import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 /// Result builder implementation for `NSLayoutConstraint`.
 /// - This is pretty the same as `ViewBuilder` from `SwiftUI`

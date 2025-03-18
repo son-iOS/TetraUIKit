@@ -5,8 +5,11 @@
 //  Created by Son Nguyen on 1/11/22.
 //
 
-import UIKit
 import Combine
+
+#if os(iOS)
+
+import UIKit
 
 public extension UIButton {
 
@@ -79,3 +82,5 @@ public extension UIButton {
     return self
   }
 }
+
+#endif

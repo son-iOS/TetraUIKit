@@ -5,6 +5,8 @@
 //  Created by Son Nguyen on 1/25/22.
 //
 
+#if os(iOS)
+
 import UIKit
 import Combine
 
@@ -57,3 +59,5 @@ public extension UITextField {
     return self
   }
 }
+
+#endif

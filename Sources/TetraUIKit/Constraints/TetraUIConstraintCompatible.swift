@@ -5,7 +5,11 @@
 //  Created by Son Nguyen on 2/27/22.
 //
 
+#if canImport(UIKit)
 import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 @MainActor public protocol TetraUIConstraintCompatible: AnyObject {
   var widthAnchor: NSLayoutDimension { get }
@@ -23,7 +27,11 @@ import UIKit
   var lastBaselineAnchor: NSLayoutYAxisAnchor { get }
 
   var translatesAutoresizingMaskIntoConstraints: Bool { get set}
+#if os(iOS)
   var safeAreaLayoutGuide: UILayoutGuide { get }
+#elseif os(macOS)
+  var safeAreaLayoutGuide: NSLayoutGuide { get }
+#endif
 
   func addConstraints(@TetraUIConstraintBuilder _ constraints: () -> [NSLayoutConstraint])
 }
@@ -57,7 +65,7 @@ public extension TetraUIConstraintCompatible {
   }
 }
 
-// MARK: UIKit extensions
+#if os(iOS)
 
 extension UIView: TetraUIConstraintCompatible {}
 extension UILayoutGuide: TetraUIConstraintCompatible {
@@ -80,3 +88,29 @@ extension UILayoutGuide: TetraUIConstraintCompatible {
     set {}
   }
 }
+
+#elseif os(macOS)
+
+extension NSView: TetraUIConstraintCompatible {}
+extension NSLayoutGuide: TetraUIConstraintCompatible {
+  public var firstBaselineAnchor: NSLayoutYAxisAnchor {
+    fatalError("This object is a UILayoutGuide and it doesn't have firstBaselineAnchor")
+  }
+
+  public var lastBaselineAnchor: NSLayoutYAxisAnchor {
+    fatalError("This object is a UILayoutGuide and it doesn't have lastBaselineAnchor")
+  }
+
+  public var safeAreaLayoutGuide: NSLayoutGuide {
+    return self
+  }
+
+  public var translatesAutoresizingMaskIntoConstraints: Bool {
+    get {
+      false
+    }
+    set {}
+  }
+}
+
+#endif
