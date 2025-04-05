@@ -129,7 +129,7 @@ public extension TetraUIConstraintCompatible {
   @discardableResult func edgesPinnedToEdges(
     of other: TetraUIConstraintCompatible?,
     excludingEdeges edges: Set<TetraUIConstraintEdge>? = nil,
-    withInset insets: NSEdgeInsets = NSEdgeInsetsZero,
+    withInset insets: NSEdgeInsets = .zero,
     updateInsetWith insetsPublihser: AnyPublisher<NSEdgeInsets, Never>? = nil,
     relation: TetraUIConstraintRelation = .equal,
     useSafeArea: Bool = false

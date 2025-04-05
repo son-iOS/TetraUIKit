@@ -38,6 +38,8 @@ import AppKit
 
 public extension NSEdgeInsets {
 
+  static var zero: NSEdgeInsets { NSEdgeInsetsZero }
+
   /// Create an insets with all edges set to the same value.
   static func all(_ value: Double) -> NSEdgeInsets {
     return NSEdgeInsets(top: value, left: value, bottom: -value, right: -value)

@@ -75,7 +75,7 @@ public extension NSText {
   /// Sometimes multi-line label doesn't work very well with stack view. Use this to make the label more compatible with stack view.
   /// This simply wrap the label inside a `UIView` and pin the edges to the label to the container view.
   @discardableResult func wrappedInContainer(
-    withInsets insets: NSEdgeInsets = NSEdgeInsetsZero
+    withInsets insets: NSEdgeInsets = .zero
   ) -> NSView {
     let container = NSView()
     container.subview(self, addedWithInsets: insets)
