@@ -57,12 +57,17 @@ public extension TetraUISelfAdjustable {
     updateWith valuePublisher: AnyPublisher<T, Never>? = nil,
     animationDuration: TimeInterval? = nil
   ) -> Self {
-    guard let this = self as? ViewType else { return self }
+    guard let this = self as? ViewType,
+          animationDuration != .nan,
+          value as? Double != .nan else {
+      return self
+    }
     this[keyPath: keyPath] = value
     if let view = this as? TetraUIViewCancellable {
       valuePublisher?
         .receive(on: DispatchQueue.main)
         .sink(receiveValue: { [weak this] value in
+          guard value as? Double != .nan else { return }
           if let duration = animationDuration {
             UIView.animate(withDuration: duration) {
               this?[keyPath: keyPath] = value
@@ -84,6 +89,8 @@ public extension TetraUISelfAdjustable {
     animationDuration: TimeInterval? = nil
   ) -> Self {
     guard let this = self as? ViewType,
+          animationDuration != .nan,
+          value as? Double != .nan,
           let keyPath = keyPath as? ReferenceWritableKeyPath<ViewType, T> else {
       return self
     }
@@ -91,6 +98,7 @@ public extension TetraUISelfAdjustable {
     if let view = this as? TetraUIViewCancellable {
       valuePublisher?
         .sink(receiveValue: { [weak this] value in
+          guard value as? Double != .nan else { return }
           if let duration = animationDuration {
             UIView.animate(withDuration: duration) {
               this?[keyPath: keyPath] = value
