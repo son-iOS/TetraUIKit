@@ -83,6 +83,7 @@ public extension TetraUIConstraintCompatible {
     withMultiplier multiplier: Double
   ) -> Self {
     guard [.centerX, .centerY, .firstBaseline, .lastBaseline].contains(type),
+          multiplier.isFinite, !multiplier.isNaN,
           let other = other else {
       return self
     }
